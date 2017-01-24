@@ -2,73 +2,73 @@
 NOTE: Requires Markdown Extra. See http://michelf.ca/projects/php-markdown/extra/
  --> 
 
-#1. Introduction#
-##1.1. What is this?##
+#1. Введение#
+##1.1. Что это?##
 
-This document attempts to provide guidelines (or coding standards if you like) for coding in C# 3.0, 4.0 or 5.0 that are both useful and pragmatic. Of course, if you create such a document you should practice what you preach. So rest assured, these guidelines are representative to what we at [Aviva Solutions](http://www.avivasolutions.nl) do in our day-to-day work. Notice that not all guidelines have a clear rationale. Some of them are simply choices we made at Aviva Solutions. In the end, it doesn't matter what choice you made, as long as you make one and apply it consistently.
+Целью создания этого списка правил является попытка установить стандарты написания кода на C#, которые были бы удобными и практичными одновременно. Само собой, мы практикуем то, что создали. Эти правила являются одним из тех стандартов, которые лежат в основе нашей ежедневной работы в [Aviva Solutions](http://www.avivasolutions.nl). Не все эти правила имеют четкое обоснование. Некоторые из них просто приняты у нас в качестве стандартов. В конце-концов, не столько важен сам выбор, а важно то, как строго вы следуйте выбранным правилам.
 
-Visual Studio's [Static Code Analysis](http://msdn.microsoft.com/en-us/library/dd264939.aspx) (which is also known as FxCop) and [StyleCop](http://stylecop.codeplex.com/) can already automatically enforce a lot of coding and design rules by analyzing the compiled assemblies. You can configure it to do that at compile time or as part of a continuous or daily build. The companion site [www.csharpcodingguidelines.com](http://www.csharpcodingguidelines.com) provides a list of code analysis rules depending on the type of code base you're dealing with. This document just provides an additional set of rules and recommendations that should help you achieve a more maintainable code base.
+[Статический анализатор кода](http://msdn.microsoft.com/en-us/library/dd264939.aspx) VisualStudio (который также известен как FxComp) и [StyleCop](http://stylecop.codeplex.com/) могут автоматически применять многие из правил кодирования и оформления путем анализа скомпилированных сборок. Вы можете сконфигурировать их таким образом, чтобы анализ производился во время компиляции или был неотъемлемой частью непрерывной или ежедневной сборки. Этот документ просто добавляет дополнительные правила и рекомендации, но его вспомогательный сайт [www.csharpcodingguidelines.com](http://www.csharpcodingguidelines.com) предоставляет список правил анализа кода, необходимых в зависимости от того, с какой базой кода вы работаете.
 
-##1.2. Why would you use this document?##
+##1.2. Зачем мне это использовать?##
 
-Although some might see coding guidelines as undesired overhead or something that limits creativity, this approach has already proven its value for many years. This is because not every developer:
+Некоторые воспринимают стандарты написания кода как некие ограничения, которые ущемляют свободу творчества. Но тем не менее такой подход оправдан и проверен в течение многих лет. Почему? Потому, что не каждый разработчик знает, что:
 
-- is aware that code is generally read 10 times more than it is changed;
-- is aware of the potential pitfalls of certain constructions in C#;
-- is up to speed on certain conventions when using the .NET Framework such as `IDisposable` or the deferred execution nature of LINQ;
-- is aware of the impact of using (or neglecting to use) particular solutions on aspects like security, performance, multi-language support, etc;
-- realizes that not every developer is as capable, skilled or experienced to understand elegant, but potentially very abstract solutions;
+- на то, чтобы разобраться в коде уходит в 10 раз больше времени, чем на то, чтобы его изменить;
+- не каждый разработчик знает о тонкостях использования основных конструкций в C#;
+- не каждый знает о том, каких соглашений .NET Framework следует придерживаться, например, при использовании `IDisposable` или LINQ с его отложенным исполнением;
+- не каждый знает, как частные решения какой-либо задачи могут повлиять на производительность, безопасность, поддержку нескольких языков и т.д.;
+- не каждый разработчик сможет понять красивый, но абстрактный код другого разработчика;
 
-##1.3. Basic principles##
+##1.3. Базовые принципы##
 
-There are many unexpected things I run into during my work as a consultant, each deserving at least one guideline. Unfortunately, I still need to keep this document within a reasonable size. But unlike what some junior developers believe, that doesn't mean that something is okay just because it is not mentioned in this document.
+Имеется много неочевидных вещей, с которыми я сталкивался в моей работе в качестве консультанта и которые заслуживают упоминания как минимум в одной рекомендации по написанию кода. К сожалению, объем этого руководства должен находиться в разумных пределах. Однако, чтобы ни подумали некоторые начинающие разработчики, если я что-то не упомянул в этом документе, это не значит, что это не заслуживает внимания.
 
-In general, if I have a discussion with a colleague about a smell that this document does not cover, I'll refer back to a set of basic principles that apply to all situations, regardless of context. These include:
+С учетом вышесказанного вам следует понимать, что данный документ не в силах охватить все ситуации, с которыми вы можете столкнуться. В любом спорном случае вам следует ссылаться на базовые принципы, которые применимы в любой ситуации вне зависимости от контекста. К ним относятся:
 
-- The Principle of Least Surprise (or Astonishment): you should choose a solution that everyone can understand, and that keeps them on the right track.
-- Keep It Simple Stupid (a.k.a. KISS): the simplest solution is more than sufficient.
-- You Ain't Gonna Need It (a.k.a. YAGNI): create a solution for the problem at hand, not for the ones you think may happen later on. Can you predict the future?
-- Don't Repeat Yourself (a.k.a. DRY): avoid duplication within a component, a source control repository or  a [bounded context](http://martinfowler.com/bliki/BoundedContext.html), without forgetting the [Rule of Three](http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/) heuristic.
-- In general, generated code should not need to comply with coding guidelines. However, if it is possible to modify the templates used for generation, try to make them generate code that complies as much as possible.
+- The Principle of Least Surprise. «Правило наименьшего удивления». Вы должны выбирать наиболее очевидное решение для своих задач, чтобы не сбить с толку других разработчиков и сделать код более понятным
+- Keep It Simple Stupid (или KISS). Дословно – «Делай это проще, тупица». Этот принцип гласит, что для решения поставленных задач необходимо выбирать наиболее простое решение
+- You Ain’t Gonne Need It (или YAGNI). «Вам это не понадобится». Он гласит: «Работайте над решением текущих задач, не пишите код только потому, что думаете, будто он пригодится вам в дальнейшем (вы можете предсказывать будущее?)»
+- Don't Repeat Yourself (или DRY). «Не повторяйся». Этот принцип призывает вас воздержаться от дублирования кода в пределах компонента, репозитория или [связанного контекста](http://martinfowler.com/bliki/BoundedContext.html), и при этом не забыть об [эвристическом правиле трех](http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/).
+- В общем случае не обязательно, чтобы вся кодовая база строго соответствовала данным рекомендациям. Тем не менее, она должна соответствовать им настолько, насколько это возможно.
 
-Regardless of the elegance of someone's solution, if it's too complex for the ordinary developer, exposes unusual behavior, or tries to solve many possible future issues, it is very likely the wrong solution and needs redesign. The worst response a developer can give you to these principles is: "But it works?". 
+Разработчик может элегантно решить какую-либо проблему, но если при этом его код слишком сложный для понимания, имеет необычное поведение или пытается решить проблемы, которых еще не существует, то вероятнее всего, что выбранное решение не является верным и нуждается в переработке. Наихудшим ответом в этом случае может быть только "Но ведь это работает?".
 
-##1.4. How do you get started?##
+##1.4. С чего мне начать?##
 
-- Ask all developers to carefully read this document at least once. This will give them a sense of the kind of guidelines the document contains. 
-- Make sure there are always a few hard copies of the [Quick Reference](http://www.csharpcodingguidelines.com/) close at hand. 
-- Include the most critical coding guidelines on your [Project Checklist](http://www.continuousimprover.com/2010/03/alm-practices-5-checklists.html) and verify the remainder as part of your [Peer Review](http://www.dennisdoomen.net/2010/02/tfs-development-practices-part-2-peer.html). 
-- Consider forking the [original sources](https://github.com/dennisdoomen/csharpguidelines) on [GitHub](https://github.com/) and create your own [internal](https://github.com/dennisdoomen/csharpguidelines/blob/master/LICENSE.md) version of the document.
-- Decide which CA rules are applicable for your project and store these somewhere, such as your source control system, or create a custom Visual Studio Rule Set. The [companion site](http://www.csharpcodingguidelines.com/) offers rule sets for both line-of-business applications and more generic code bases, like frameworks and class libraries.
-- Add a custom [Code Analysis Dictionary](http://msdn.microsoft.com/en-us/library/bb514188.aspx) containing your domain or company-specific terms, names and concepts. If you don't, Static Analysis will report warnings for (parts of) phrases that are not in its internal dictionary. 
-- Configure Visual Studio to verify the selected CA rules as part of the Release build. Then they won't interfere with normal developing and debugging activities, but still can be run by switching to the Release configuration. 
-- Add an item to your project checklist to make sure all new code is verified against CA violations, or use something like [Check-in Policy](http://msdn.microsoft.com/en-us/library/ms182075(v=vs.110).aspx) or a [Git commit hook](http://git-scm.com/book/en/Customizing-Git-Git-Hooks) to prevent any code from violating CA rules at all. 
-- [ReSharper](http://www.jetbrains.com/resharper/) has an intelligent code inspection engine that, with some configuration, already supports many aspects of the Coding Guidelines. It automatically highlights any code that does not match the rules for naming members (e.g. Pascal or Camel casing), detects dead code, and many other things. One click of the mouse button (or the corresponding keyboard shortcut) is usually enough to fix it. 
-- ReSharper also has a File Structure window that displays an overview of the members of your class or interface, and allows you to easily rearrange them using a simple drag-and-drop action. 
-- Using [GhostDoc](http://submain.com/products/ghostdoc.aspx) you can generate XML comments for any member using a keyboard shortcut. The beauty of it is that it closely follows the MSDN-style of documentation. However, you have to be careful not to misuse this tool, and use it as a starter only. 
+- Попросите всех разработчиков внимательно прочитать этот документ хотя бы один раз. Это должно дать им понимание того, какие принципы в нем содержатся. 
+- Убедитесь, что всегда имеются под рукой несколько печатных копий [кратких ссылок](http://www.csharpcodingguidelines.com/) на данное руководство. 
+- Включите наиболее значимые правила в ваш [Project Checklist](http://www.continuousimprover.com/2010/03/alm-practices-5-checklists.html), на соответствие оставшимся правилам делайте проверку во время [Peer Review](http://www.dennisdoomen.net/2010/02/tfs-development-practices-part-2-peer.html). 
+- Склонируйте [оригинальную версию](https://github.com/dennisdoomen/csharpguidelines) рекомендаций на [GitHub](https://github.com/) и создайте [свою](https://github.com/dennisdoomen/csharpguidelines/blob/master/LICENSE.md) версию этого документа.
+- Решите, какие правила статического анализа применимы к вашему проекту и сохраните их где-то, например в вашей системе контроля версийю Или создайте свой набор правил статического анализа для Visual Studio. [Сайт-спутник](http://www.csharpcodingguidelines.com/) предлагает набор правил для наборы правил для бизнес-приложений и для более общей кодовой базы (например библиотеки и фреймворки).
+- Пополните ваш [настраиваемый словарь анализа кода](http://msdn.microsoft.com/en-us/library/bb514188.aspx) терминами, именами и понятиями, специфичными для вашей компании или области деятельности. Если вы этого не сделаете, статический анализатор будет выводить предупреждения на конструкции, которые не будут включены в его внутренний словарь. 
+- Настройте VisualStudio выполнять проверку на следование выбранным правилам статического анализа в качестве части релизной сборки. Тогда они не будут служить помехой при разработке и отладке, но могут быть запущены при переключении на релизную конфигурацию. 
+- Добавьте в чеклист проекта пункты проверки на следование рекомендациям, чтобы быть уверенным, что весь новый код им соответствует, или используйте соответствующую [политику чекинов](http://msdn.microsoft.com/en-us/library/ms182075(v=vs.110).aspx) или настройте [хук для git](http://git-scm.com/book/en/Customizing-Git-Git-Hooks)  чтобы быт обеспечить соблюдение данных правил. 
+- [ReSharper](http://www.jetbrains.com/resharper/) имеет интеллектуальный инспектор кода, который при некоторой настройке уже поддерживает многие требования данного руководства. Он будет автоматически выделять любой код, который не соответствует правилам именования (например, стиль именования паскаль или верблюжья нотация), находить мертвый код и делать любые другие проверки. Одного клика мыши (или сочетания горячих клавиш) будет достаточно для того, чтоб исправить это. 
+- ReSharper, кроме всего прочего, имеет окно File Structure, которое дает общее представление о членах вашего класса или интерфейса и позволяет вам легко перемещать их с помощью простого перетаскивания.
+- Используя [GhostDoc](http://submain.com/products/ghostdoc.aspx), вы можете генерировать XML комментарии, используя сочетания горячих клавиш. Вся прелесть заключается в том, что это позволяет точно следовать стилю MSDN документации. Тем не менее, не злоупотребляйте этим инструментом и используйте его только в качестве стартового. 
 
-##1.5. Why did we create it?##
+##1.5. Почему вы создали это?##
 
-The idea started in 2002 when Vic Hartog (Philips Medical Systems) and I were assigned the task of writing up a [coding standard](http://www.tiobe.com/content/paperinfo/gemrcsharpcs.pdf) for C# 1.0. Since then, I've regularly added, removed and changed rules based on experiences, feedback from the community and new tooling support offered by a continuous stream of new Visual Studio releases.
+Идея пришла в 2002 году, когда Вику Харторгу (Philips Medical System) и мне была поставлена задача написания [стандартов кодирования](http://www.tiobe.com/content/paperinfo/gemrcsharpcs.pdf) для C# 1.0. С тех пор я регулярно добавлял, удалял и изменял правила, основываясь на опыте, отзывах сообщества и новых инструментах, предоставляемых вместе с новыми релизами Visual Studio.
 
-Additionally, after reading [Robert C. Martin](http://www.objectmentor.com/omTeam/martin_r.html)'s book [Clean Code: A Handbook of Agile Software Craftsmanship](http://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882), I became a big fan of his ideas and decided to include some of his smells and heuristics as guidelines. Notice though, that this document is in no way a replacement for his book. I sincerely recommend that you read his book to gain a solid understanding of the rationale behind his recommendations.
+Кроме того, после прочтения книги [Роберта Мартина](http://www.objectmentor.com/omTeam/martin_r.html) [«Чистый код: Создание, анализ и рефакторинг»](http://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882)я загорелся его идеями и решил включить некоторые из них в качестве правил. Хочу заметить, что этот документ ни в коем случае не является заменой его книги. Я искренне рекомендую прочесть его книгу, чтобы твердо усвоить принципы, лежащие в основе его рекомендаций.
 
-I've also decided to include some design guidelines in addition to simple coding guidelines. They are too important to ignore and have a big influence in reaching high quality code.
+К тому же я решил дополнить принципы написания кода некоторыми принципами проектирования. Они являются слишком важными, чтобы их игнорировать, и имеют большое влияние на достижение высокого качества кода.
 
-##1.6. Is this a coding standard?##
+##1.6. Эти рекомендации являются стандартами?##
 
-The document does not state that projects must comply with these guidelines, neither does it say which guidelines are more important than others. However, we encourage projects to decide themselves which guidelines are important, what deviations a project will use, who is the consultant in case doubts arise, and what kind of layout must be used for source code. Obviously, you should make these decisions before starting the real coding work.
+В этом документе не утверждается, что в проектах необходимо строго соблюдать эти рекомендации. Также в нем не утверждается, что эти рекомендации более важны, чем остальные. Однако мы рекомендуем, чтобы вы сами решили, какие рекомендации важны, какие отклонения от стандарта можно допустить в проекте, кто будет консультантом в случае, если возникнут сомнения, и какую верстку использовать для исходного кода. Очевидно, именно вы должны принять эти решения, прежде чем приступить к реальной работе.
 
-To help you in this decision, I've assigned a level of importance to each guideline:
+Чтобы помочь вам в выборе, я присвоил степень важности каждой рекомендации:
 
-![](images/1.png) Guidelines that you should never skip and should be applicable to all situations
+![](images/1.png) Правило, которым вы никогда не должны пренебрегать и которое применимо ко всем ситуациям
 
-![](images/2.png) Strongly recommended guidelines
+![](images/2.png) Настоятельно рекомендуется соблюдать это правило
 
-![](images/3.png) May not be applicable in all situations
+![](images/3.png) Рекомендуется соблюдать это правило, но оно применимо не ко всем ситуациям
 
-##1.7. Feedback and disclaimer##
+##1.7. Обратная связь и отказ от ответственности##
 
-This document has been compiled using many contributions from community members, blog posts, on-line discussions and many years of developing in C#. If you have questions, comments or suggestions, just let me know by sending me an email at [dennis.doomen@avivasolutions.nl](mailto:dennis.doomen@avivasolutions.nl), [creating an issue](https://github.com/dennisdoomen/csharpguidelines/issues) or Pull Request on GitHub, or ping me at [http://twitter.com/ddoomen](http://twitter.com/ddoomen). I will try to revise and republish this document with new insights, experiences and remarks on a regular basis.
+Этот документ был составлен во многом благодаря большому вкладу членов сообщества, статьям в блогах, онлайн дискуссиям и многим годам разработки на С#. Если у вас есть вопросы, замечания и предложения пишите мне на адрес [dennis.doomen@avivasolutions.nl](mailto:dennis.doomen@avivasolutions.nl), [публикуйте ошибки](https://github.com/dennisdoomen/csharpguidelines/issues) или делайте Pull Request на GitHub, или пишите мне в твиттер [http://twitter.com/ddoomen](http://twitter.com/ddoomen). Я буду пытаться регулярно пересматривать и переопубликовывать этот документ в соответствии с новыми идеями, опытом и замечаниями.
 
-Notice though that it merely reflects my view on proper C# code so Aviva Solutions will not be liable for any direct or indirect damages caused by applying the guidelines of this document. This document is published under a Creative Commons license, specifically the [Creative Commons Attribution-ShareAlike 4.0](http://creativecommons.org/licenses/by-sa/4.0/) license. 
+Хочу отметить, что эти рекомендации лишь отражают мое видение правильного кода на C#. Aviva Solutions не несет ответственности за любые прямые или косвенные убытки, вызванные применением стандартов, описанных в данном документе. Этот документ опубликован под лицензией Creative Commons license, в частности [The Creative Commons Attribution-ShareAlike 4.0](http://creativecommons.org/licenses/by-sa/4.0/). 

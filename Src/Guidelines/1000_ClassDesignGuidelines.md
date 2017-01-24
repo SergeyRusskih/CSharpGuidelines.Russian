@@ -2,49 +2,49 @@
 NOTE: Requires Markdown Extra. See http://michelf.ca/projects/php-markdown/extra/
  --> 
 
-#2. Class Design Guidelines
+#2. Рекомендации по проектированию классов
 
-### <a name="av1000"></a> A class or interface should have a single purpose (AV1000) ![](images/1.png)
+### <a name="av1000"></a> Класс или интерфейс должны иметь единственное предназначение (AV1000) ![](images/1.png)
 
-A class or interface should have a single purpose within the system it functions in. In general, a class either represents a primitive type like an email or ISBN number, an abstraction of some business concept, a plain data structure, or is responsible for orchestrating the interaction between other classes. It is never a combination of those. This rule is widely known as the [Single Responsibility Principle](http://www.objectmentor.com/resources/articles/srp.pdf), one of the S.O.L.I.D. principles.
+Класс или интерфейс должен иметь единственное предназначение в рамках системы, в которой он используется. Как правило, класс служит одной из целей: либо он описывает тип, например, email или ISBN (международный стандартный книжный номер), либо представляет из себя абстракцию некоторой бизнес-логики, либо он описывает структуру данных, либо отвечает за взаимодействие между другими классами. Он никогда не должен в себе комбинировать эти задачи. Это правило известно как [Принцип единой ответственности](http://www.objectmentor.com/resources/articles/srp.pdf), один из принципов SOLID.
 
-**Tip:** A class with the word `And` in it is an obvious violation of this rule.
+**Совет:** Класс со словом `And` в названии — это явное нарушение данного правила.
 
-**Tip:** Use [Design Patterns](http://en.wikipedia.org/wiki/Design_pattern_(computer_science)) to communicate the intent of a class. If you can't assign a single design pattern to a class, chances are that it is doing more than one thing.
+**Совет:** Для взаимодействия между классами используйте [паттерны проектирования](http://en.wikipedia.org/wiki/Design_pattern_(computer_science)). Если вам не удается применить ни один из паттернов к классу, возможно, он берет на себя слишком большую ответственность.
 
-**Note** If you create a class representing a primitive type you can greatly simplify its use by making it immutable.
+**Примечание** Если вы создаете класс, который описывает примитивный тип, вы можете значительно упростить его использование, если сделаете его неизменяемым.
 
-### <a name="av1001"></a> Only create a constructor that returns a useful object (AV1001) ![](images/3.png)
+### <a name="av1001"></a> Создавайте новые экземпляры класса с помощью конструктора таким образом, чтобы в результате вы получили полностью готовый к использованию объект (AV1001) ![](images/3.png)
 
-There should be no need to set additional properties before the object can be used for whatever purpose it was designed. However, if your constructor needs more than three parameters (which violates AV1561), your class might have too much responsibility (and violates AV1000).
+Созданный объект не должен нуждаться в установке дополнительных свойств перед использованием в каких бы целях его не планировалось бы применять. При этом если конструктор нуждается в более чем трех параметрах (что нарушает правило AV1561), возможно, что класс берет на себя слишком большую ответственность (нарушение правила AV1000).
 
-### <a name="av1003"></a> An interface should be small and focused (AV1003) ![](images/2.png)
+### <a name="av1003"></a> Интерфейс должен быть небольшим и должен быть сфокусирован на решении одной задачи (AV1003) ![](images/2.png)
 
-Interfaces should have a name that clearly explains their purpose or role in the system. Do not combine many vaguely related members on the same interface just because they were all on the same class. Separate the members based on the responsibility of those members, so that callers only need to call or implement the interface related to a particular task. This rule is more commonly known as the [Interface Segregation Principle](http://www.objectmentor.com/resources/articles/isp.pdf).
+Интерфейс должен иметь имя, которое ясно описывает его предназначение или роль, которую он выполняет в системе. Не объединяйте слабо связанные элементы в один интерфейс только потому, что они относятся к одному классу. Формируйте интерфейсы на основании функциональности, за которую отвечают вызываемые методы или на основе конкретной задачи, которую этот интерфейс выполняет. Это правило более известно как [Принцип сегрегации интерфейса](http://www.objectmentor.com/resources/articles/isp.pdf).
 
-### <a name="av1004"></a> Use an interface rather than a base class to support multiple implementations (AV1004) ![](images/3.png)
+### <a name="av1004"></a> Используйте интерфейс, а не базовый класс, чтобы поддерживать несколько реализаций (AV1004) ![](images/3.png)
 
-If you want to expose an extension point from your class, expose it as an interface rather than as a base class. You don't want to force users of that extension point to derive their implementations from a base class that might have an undesired behavior. However, for their convenience you may implement a(n abstract) default implementation that can serve as a starting point.
+Если вы хотите выставить точку расширения вашего класса, выставляйте его в качестве интерфейса, а не базового класса. Вам не захочется заставлять пользователей этой точки расширения делать свои реализации на основе базового класса, который может вести себя нежелательным образом. Впрочем, для их удобства вы можете создать реализацию по умолчанию (абстрактный класс), которая может служить в качестве отправной точки.
 
-### <a name="av1005"></a> Use an interface to decouple classes from each other (AV1005) ![](images/2.png)
+### <a name="av1005"></a> Используйте интерфейс для реализации слабой связанности между классами (AV1005) ![](images/2.png)
 
-Interfaces are a very effective mechanism for decoupling classes from each other:
+Интерфейсы – это отличный инструмент для реализации слабой связанности между классами:
 
-- They can prevent bidirectional associations; 
-- They simplify the replacement of one implementation with another; 
-- They allow the replacement of an expensive external service or resource with a temporary stub for use in a non-production environment.
-- They allow the replacement of the actual implementation with a dummy implementation or a fake object in a unit test; 
-- Using a dependency injection framework you can centralize the choice of which class is used whenever a specific interface is requested.
+- Они помогают избежать двунаправленной связанности; 
+- Они упрощают замену одной реализации другой; 
+- Они позволяют заменить недоступный внешний сервис или ресурс временной заглушкой для использования в нерабочем окружении;
+- Он позволяет заменить текущую реализацию фиктивной при модульном тестировании; 
+- Используя фреймворк для внедрения инъекции зависимостей, вы можете собрать в одном месте логику выбора класса в зависимости от запрашиваемого интерфейса.
 
-### <a name="av1008"></a> Avoid static classes (AV1008) ![](images/3.png)
+### <a name="av1008"></a> Избегайте статических классов (AV1008) ![](images/3.png)
 
-With the exception of extension method containers, static classes very often lead to badly designed code. They are also very difficult, if not impossible, to test in isolation, unless you're willing to use some very hacky tools.
+За исключением статических классов, которые используются для создания методов расширений, статические классы очень часто приводят к плохому коду. К тому же их очень сложно, если вообще возможно, тестировать в изоляции до тех пор, пока вы не прибегнете к каким-либо очень изощренным инструментам.
 
-**Note:** If you really need that static class, mark it as static so that the compiler can prevent instance members and instantiating your class. This relieves you of creating an explicit private constructor.
+**Примечание:** Если вам действительно необходим статический класс, пометьте его как static. В этом случае компилятор запретит создание экземпляров этого класса и инициализирует ваш класс перед первым обращением к нему. Это избавит вас от необходимости использовать приватный конструктор. 
 
-### <a name="av1010"></a> Don't hide inherited members with the new keyword (AV1010) ![](images/1.png)
+### <a name="av1010"></a> Не скрывайте унаследованные элементы за ключевым словом new (AV1010) ![](images/1.png)
 
-Not only does the new keyword break [Polymorphism](http://en.wikipedia.org/wiki/Polymorphism_in_object-oriented_programming), one of the most essential object-orientation principles, it also makes sub-classes more difficult to understand. Consider the following two classes:
+Это не только противоречит [полиморфизму](http://en.wikipedia.org/wiki/Polymorphism_in_object-oriented_programming), одному из самых важных принципов объектно-ориентированного программирования, но и делает дочерние классы трудными для понимания. Рассмотрим следующие два класса:
 
 	public class Book  
 	{
@@ -62,46 +62,46 @@ Not only does the new keyword break [Polymorphism](http://en.wikipedia.org/wiki/
 		}  
 	}
 
-This will cause behavior that you would not normally expect from class hierarchies:
+В этом случае класс будет иметь не то поведение, которое вы будете ожидать от него при его использовании:
 
 	PocketBook pocketBook = new PocketBook();
 	
-	pocketBook.Print(); // Outputs "Printing PocketBook "
+	pocketBook.Print();  // Выведет "Printing PocketBook"
 	
-	((Book)pocketBook).Print(); // Outputs "Printing Book"
+	((Book)pocketBook).Print();  // Выведет  "Printing Book"
 
-It should not make a difference whether you call `Print()` through a reference to the base class or through the derived class.
+Не должно быть разницы в том, вызывается ли метод `Print()` через ссылку на базовый клас или в качестве метода производного класса.
 
-### <a name="av1011"></a> It should be possible to treat a derived object as if it were a base class object (AV1011) ![](images/2.png)
+### <a name="av1011"></a> Функции, которые используют базовый тип, должны иметь возможность использовать подтипы базового типа, не зная об этом (AV1011) ![](images/2.png)
 
-In other words, you should be able to use a reference to an object of a derived class wherever a reference to its base class object is used without knowing the specific derived class. A very notorious example of a violation of this rule is throwing a `NotImplementedException` when overriding some of the base-class methods. A less subtle example is not honoring the behavior expected by the base class.   
+Другими словами, поведение наследуемых классов не должно противоречить поведению, заданному базовым классом, то есть поведение наследуемых классов должно быть ожидаемым для кода, использующего переменную базового типа. Наиболее известным примером нарушения этого правила является исключение `NotImplementedException`, когда оно возникает при переопределении метода базового класса.   
   
-**Note:** This rule is also known as the Liskov Substitution Principle, one of the [S.O.L.I.D.](http://www.lostechies.com/blogs/chad_myers/archive/2008/03/07/pablo-s-topic-of-the-month-march-solid-principles.aspx) principles.
+**Примечание:** Этот принцип также известен как Принцип подстановки Барбары Лисков, один из принципов [S.O.L.I.D.](http://www.lostechies.com/blogs/chad_myers/archive/2008/03/07/pablo-s-topic-of-the-month-march-solid-principles.aspx)
 
-### <a name="av1013"></a> Don't refer to derived classes from the base class (AV1013) ![](images/1.png)
+### <a name="av1013"></a> Не ссылайтесь на производные классы из базового класса (AV1013) ![](images/1.png)
 
-Having dependencies from a base class to its sub-classes goes against proper object-oriented design and might prevent other developers from adding new derived classes.
+Наличие зависимостей в родительском классе от его дочерних классов нарушает принципы объектно-ориентированного программирования и не дает возможности другим разработчикам наследоваться от вашего базового класса.
 
-### <a name="av1014"></a> Avoid exposing the other objects an object depends on (AV1014) ![](images/2.png)
+### <a name="av1014"></a> Объект должен обладать ограниченным знанием о других объектах, которые не имеют непосредственного отношения к этому объекту (AV1014) ![](images/2.png)
 
-If you find yourself writing code like this then you might be violating the [Law of Demeter](http://en.wikipedia.org/wiki/Law_of_Demeter).
+Если ваш код напоминает код, который приведен ниже, то вы нарушаете [Закон Деметры](http://en.wikipedia.org/wiki/Law_of_Demeter).
 
 	someObject.SomeProperty.GetChild().Foo()
 
-An object should not expose any other classes it depends on because callers may misuse that exposed property or method to access the object behind it. By doing so, you allow calling code to become coupled to the class you are using, and thereby limiting the chance that you can easily replace it in a future stage.
+Объект не должен открывать доступ к классам, от которых он зависит, потому что объекты-пользователи могут неправильно использовать свойства и методы для получения доступа к объектам, находящимся за ним. Делая так, вы позволяете вызываемому коду объединиться в одно целое с классом, который вы используйте. Таким образом, вы ограничиваете возможность замены одной реализации на другую в будущем.
 
-**Note:** Using a class that is designed using the [Fluent Interface](http://en.wikipedia.org/wiki/Fluent_interface) pattern seems to violate this rule, but it is simply returning itself so that method chaining is allowed.
+**Примечание:** Использование класса, реализующего [текучий интерфейс (Fluent Interface)](http://en.wikipedia.org/wiki/Fluent_interface), может показаться нарушением данного правила. Но вызываемые методы просто передают контекст вызова следующему звену. Таким образом, это не вызывает противоречий.
 
-**Exception:** Inversion of Control or Dependency Injection frameworks often require you to expose a dependency as a public property. As long as this property is not used for anything other than dependency injection I would not consider it a violation.
+**Исключение:** При использовании инверсии управления и фреймворков инъекции зависимостей часто требуется, чтобы зависимости выставлялись в качестве публичных свойств. До тех пор пока эти свойства не используются ни для чего другого, кроме как реализации инъекции зависимостей, я бы не стал рассматривать это как нарушение правила.
 
-### <a name="av1020"></a> Avoid bidirectional dependencies (AV1020) ![](images/1.png)
+### <a name="av1020"></a> Избегайте двунаправленной зависимости (AV1020) ![](images/1.png)
 
-This means that two classes know about each other's public members or rely on each other's internal behavior. Refactoring or replacing one of those classes requires changes on both parties and may involve a lot of unexpected work. The most obvious way of breaking that dependency is to introduce an interface for one of the classes and using Dependency Injection.
+Двунаправленная зависимость означает, что два класса знают о публичных методах друг друга или зависят от внутреннего поведения друг друга. Рефакторинг или замена одного из этих двух классов требуют изменений в обоих классах и могут повлечь за собой много непредвиденной работы. Наиболее очевидное решение – это создание интерфейса для одного из этих классов и использование инъекции зависимостей.
 
-**Exception:** Domain models such as defined in [Domain-Driven Design](http://domaindrivendesign.org/) tend to occasionally involve bidirectional associations that model real-life associations. In those cases, make sure they are really necessary, and if they are, keep them in.
+**Исключение:** Доменные модели (Domain Model), применяемые в [проектировании на основе предметной области (Domain Driven Design)](http://domaindrivendesign.org/), могут использовать двунаправленные зависимости, описывающие ассоциации из реального мира. В таких случаях я стараюсь удостовериться, что они действительно необходимы, и по мере возможности пытаюсь их избегать.
 
-### <a name="av1025"></a> Classes should have state and behavior (AV1025) ![](images/1.png)
+### <a name="av1025"></a> Классы должны иметь состояние и поведение (AV1025) ![](images/1.png)
 
-In general, if you find a lot of data-only classes in your code base, you probably also have a few (static) classes with a lot of behavior (see AV1008). Use the principles of object-orientation explained in this section and move the logic close to the data it applies to.
+Если в вашем репозитории находится множество классов, которые служат только для описания данных, то, скорей всего, у вас есть несколько классов (статических), содержащих в себе много логики обработки этих данных (смотрите правило AV1008). Используйте принципы объектно-ориентированного программирования согласно рекомендациям в этом разделе, переместите вашу логику обработки данных к тем данным, которые ей используются.
 
-**Exception:** The only exceptions to this rule are classes that are used to transfer data over a communication channel, also called [Data Transfer Objects](http://martinfowler.com/eaaCatalog/dataTransferObject.html), or a class that wraps several parameters of a method.
+**Исключение:** Единственным исключением из этого правила являются классы, используемые для передачи данных между подсистемами приложения, также называемые [Data Transfer Objects](http://martinfowler.com/eaaCatalog/dataTransferObject.html), или классы, служащие оберткой для параметров метода.

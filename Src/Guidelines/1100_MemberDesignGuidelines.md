@@ -2,53 +2,55 @@
 NOTE: Requires Markdown Extra. See http://michelf.ca/projects/php-markdown/extra/
  --> 
 
-#3. Member Design Guidelines
+#3. Рекомендации по проектированию членов класса
 
-### <a name="av1100"></a> Allow properties to be set in any order (AV1100) ![](images/1.png)
+### <a name="av1100"></a> Свойства класса должны иметь возможность быть установленными в любом порядке (AV1100) ![](images/1.png)
 
-Properties should be stateless with respect to other properties, i.e. there should not be a difference between first setting property `DataSource` and then `DataMember` or vice-versa.
+Свойства не должны зависеть от других свойств. Другими словами, не должно быть разницы в том, какое свойство мы устанавливаем в первую очередь. Например, сначала `DataSource`, затем `DataMember` или наоборот.
 
-### <a name="av1105"></a> Use a method instead of a property (AV1105) ![](images/3.png)
+### <a name="av1105"></a> Используйте метод вместо свойства (AV1105) ![](images/3.png)
 
-- If the work is more expensive than setting a field value. 
-- If it represents a conversion such as the `Object.ToString` method.
-- If it returns a different result each time it is called, even if the arguments didn't change. For example, the `NewGuid` method returns a different value each time it is called.
-- If the operation causes a side effect such as changing some internal state not directly related to the property (which violates the [Command Query Separation](http://martinfowler.com/bliki/CommandQuerySeparation.html) principle). 
+Используйте методы вместо свойств, если:
 
-**Exception:** Populating an internal cache or implementing [lazy-loading](http://www.martinfowler.com/eaaCatalog/lazyLoad.html) is a good exception.
+- Производится более дорогостоящая работа, чем настройка значения поля. 
+- Если свойство представляет из себя конвертацию. Например, `Object.ToString` метод.
+- Если свойство возвращает различные значения для каждого вызова, даже если аргументы при этом не изменяются. Например, метод `NewGuid` будет каждый раз возвращать новое значение.
+- Если использование свойства вызывает побочный эффект. Например, изменение внутреннего состояния, которое не имеет прямого отношения к свойству (это нарушает [ command-query responsibility segregation (CQRS)](http://martinfowler.com/bliki/CommandQuerySeparation.html)). 
 
-### <a name="av1110"></a> Don't use mutual exclusive properties (AV1110) ![](images/1.png)
+**Исключение:** Заполнение внутреннего кэша или реализация [lazy-loading](http://www.martinfowler.com/eaaCatalog/lazyLoad.html) являются хорошими исключениями из этого правила.
 
-Having properties that cannot be used at the same time typically signals a type that represents two conflicting concepts. Even though those concepts may share some of their behavior and states, they obviously have different rules that do not cooperate.
+### <a name="av1110"></a> Не используйте взаимоисключающие свойства (AV1110) ![](images/1.png)
 
-This violation is often seen in domain models and introduces all kinds of conditional logic related to those conflicting rules, causing a ripple effect that significantly increases the maintenance burden.
+Если у вас имеются свойства, которые не могут быть использованы в одно и то же время, то это значит, что они представляют из себя две взаимоисключающие концепции. Даже если эти концепции могут иметь некоторую общую логику и состояние, то очевидно, что они имеют различные правила, которые не сочетаются друг с другом.
 
-### <a name="av1115"></a> A method or property should do only one thing (AV1115) ![](images/1.png)
+Нарушение этого правила часто можно встретить в доменной модели, когда свойства инкапсулируют в себе всевозможные виды условной логики, содержащей взаимоисключающие правила. Это зачастую вызывает эффект волны и обслуживание такого кода становится более трудоемким.
 
-Similarly to rule AV1000, a method should have a single responsibility.
+### <a name="av1115"></a> Метод или свойство должны иметь единственное предназначение (AV1115) ![](images/1.png)
 
-### <a name="av1125"></a> Don't expose stateful objects through static members (AV1125) ![](images/2.png)
+Так же, как и класс (смотрите правило AV1000), каждый метод должен иметь одну зону ответственности
 
-A stateful object is an object that contains many properties and lots of behavior behind it. If you expose such an object through a static property or method of some other object, it will be very difficult to refactor or unit test a class that relies on such a stateful object. In general, introducing a construction like that is a great example of violating many of the guidelines of this chapter.
+### <a name="av1125"></a> Не выставляйте объекты, описывающие состояние, посредством статических членов (AV1125) ![](images/2.png)
 
-A classic example of this is the `HttpContext.Current` property, part of ASP.NET. Many see the `HttpContext` class as a source of a lot of ugly code. In fact, the testing guideline [Isolate the Ugly Stuff](http://codebetter.com/jeremymiller/2005/10/21/haacked-on-tdd-and-jeremys-first-rule-of-tdd/) often refers to this class.
+Объекты с состоянием (stateful object) – это объекты, которые содержат в себе множество свойств и логики, которую эти свойства инкапсулируют. Если вы выставите такой объект через статическое свойство или метод другого объекта, то будут плохо поддаваться рефакторингу и юнит-тестированию классы, которые зависят от объекта с состоянием. В общем случае, использование описанной выше конструкции – отличный пример нарушения множества рекомендаций, описанных в этой главе.
 
-### <a name="av1130"></a> Return an `IEnumerable<T>` or `ICollection<T>` instead of a concrete collection class (AV1130) ![](images/2.png)
+Классическим примером служит свойство `HttpContext.Current`  в ASP.NET. Многие смотрят на класс HttpContext как на источник большого количества грязного кода. По факту, одно из правил тестирования — [изолируйте уродливые вещи (Isolate the Ugly Stuff)](http://codebetter.com/jeremymiller/2005/10/21/haacked-on-tdd-and-jeremys-first-rule-of-tdd/) — часто относится к этому классу.
 
-You generally don't want callers to be able to change an internal collection, so don't return arrays, lists or other collection classes directly. Instead, return an `IEnumerable<T>`, or, if the caller must be able to determine the count, an `ICollection<T>`.
+### <a name="av1130"></a> Возвращайте `IEnumerable<T>` или `ICollection<T>` вместо какой-либо конкретной коллекции (AV1130) ![](images/2.png)
 
-**Note:** If you're using .NET 4.5, you can also use `IReadOnlyCollection<T>`, `IReadOnlyList<T>` or `IReadOnlyDictionary<TKey, TValue>`.
+Как правило, не нужно давать пользователям возможность изменять внутреннию коллекцию, которая возвращается в результате вызова метода т.к. это нарушает инкапсуляцию. Не возвращайте массив, лист или другой класс коллекции напрямую. Вместо этого возвращайте `IEnumerable<T>` или, если пользователю требуется знать количество элементов в коллекции, `ICollection<T>`.
 
-### <a name="av1135"></a> Properties, methods and arguments representing strings or collections should never be `null` (AV1135) ![](images/1.png)
+**Заметка:** Если вы используете .Net 4.5, вы также можете применять `IReadOnlyCollection<T>`, `IReadOnlyList<T>` или `IReadOnlyDictionary<TKey, TValue>`.
 
-Returning `null` can be unexpected by the caller. Always return an empty collection or an empty string instead of a `null` reference. This also prevents cluttering your code base with additional checks for `null`, or even worse, `string.IsNullOrEmpty()`.
+### <a name="av1135"></a> Свойства, методы или аргументы, которые представляют из себя строку или коллекцию, никогда не должны быть равны `null` (AV1135) ![](images/1.png)
 
-### <a name="av1137"></a> Define parameters as specific as possible (AV1137) ![](images/2.png)
+Возвращение `null` как результат выполнения метода, может быть неожиданностью для пользователя. Всегда возвращайте пустую коллекцию или пустую строку вместо нулевой ссылки. Кроме всего прочего, это избавит вас от необходимости засорять ваш код дополнительными проверками на `null`  или, что еще хуже, использовать `string.IsNullOrEmpty()`.
 
-If your member needs a specific piece of data, define parameters as specific as that and don't take a container object instead. For instance, consider a method that needs a connection string that is exposed through a central `IConfiguration` interface. Rather than taking a dependency on the entire configuration, just define a parameter for the connection string. This not only prevents unnecessary coupling, it also improved maintainability in the long run.
+### <a name="av1137"></a> Определяйте параметры настолько специфичными, насколько это возможно (AV1137) ![](images/2.png)
 
-**Note:** An easy trick to remember this guideline is the *Don't ship the truck if you only need a package*.
+Если элемент класса в качестве параметров требует часть данных другого класса, определяйте типы данных этих параметров как можно более конкретными и не принимайте в качестве параметра весь объект целиком. Например, рассмотрим метод, который в качестве параметра требует передать строку подключения, описанную в некоем центральном интерфейсе `IConfiguration`. Вместо того, чтобы зависеть от всей конфигурации, реализующий этот интерфейс, передайте только строку подключения. Это не только позволит вам уменьшить количество зависимостей в коде, но и улучшит его сопровождаемость в отдаленной перспективе.
+ 
+**Заметка:** Чтобы легко запомнить это правило, его можно выразить одно фразой: *Не используйте грузовик если вам нужно отправить всего лишь одну посылку*.
 
-### <a name="av1140"></a> Consider using domain-specific value types rather than primitives (AV1140) ![](images/3.png)
+### <a name="av1140"></a> Используйте типы, характерные для вашей предметной области, вместо примитивов (AV1140) ![](images/3.png)
 
-Instead of using strings, integers and decimals for representing domain-specific types such as an ISBN number, an email address or amount of money, consider creating dedicated value objects that wrap both the data and the validation rules that apply to it. By doing this, you prevent ending up having multiple implementations of the same business rules, which both improves maintainability and prevents bugs.
+Вместо использования строк, целых и дробных чисел для представления таких специфичных типов, как ISBN (международный стандартный книжный номер), адрес электронной почты или денежной суммы, создавайте объекты на каждый тип, которые будут включать в себя как сами данные, так и правила валидации, которые будут к ним применяться. Делая так, вам удастся избежать множественных реализаций одних и тех же бизнес-правил. Это улучшит сопровождаемость вашего кода и уменьшит количество багов.

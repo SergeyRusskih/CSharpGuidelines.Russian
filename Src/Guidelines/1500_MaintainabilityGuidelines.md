@@ -2,62 +2,64 @@
 NOTE: Requires Markdown Extra. See http://michelf.ca/projects/php-markdown/extra/
  --> 
 
-#5. Maintainability Guidelines
+#5. Рекомендации по улучшению сопровождаемости кода
 
-### <a name="av1500"></a> Methods should not exceed 7 statements (AV1500) ![](images/1.png)
-A method that requires more than 7 statements is simply doing too much or has too many responsibilities. It also requires the human mind to analyze the exact statements to understand what the code is doing. Break it down into multiple small and focused methods with self-explaining names, but make sure the high-level algorithm is still clear.
+### <a name="av1500"></a> В методе не должно быть более 7 объявлений (AV1500) ![](images/1.png)
+Метод, который включает в себя более 7 объявлений, скорей всего делает слишком много или берет на себя слишком большую ответственность. Кроме того, человеческая память требует, чтобы метод был коротким. Она не в состоянии удерживать в себе одновременно большее количество вещей, чтобы точно проанализировать и понять, что делает тот или иной кусок кода. Разделите метод на несколько маленьких, имеющих четкое предназначение, и дайте им имена, которые будут точно указывать на то, что они делают. При этом обратите внимание на то, чтобы алгоритм работы этой части программы оставался ясен для понимания.
 
-### <a name="av1501"></a> Make all members private and types internal by default (AV1501) ![](images/1.png)
-To make a more conscious decision on which members to make available to other classes, first restrict the scope as much as possible. Then carefully decide what to expose as a public member or type.
+### <a name="av1501"></a>Создавайте все члены класса `private`, а типы `internal` по умолчанию  (AV1501) ![](images/1.png)
+Чтобы принять более взвешенное решение о том, какие элементы должны быть доступны другим классам, в первую очередь как можно больше ограничьте их область видимости. Затем тщательно подумайте, какие члены или типы действительно стоит сделать `public`.
 
-### <a name="av1502"></a> Avoid conditions with double negatives (AV1502) ![](images/2.png)
-Although a property like `customer.HasNoOrders` makes sense, avoid using it in a negative condition like this:
+### <a name="av1502"></a> Избегайте двойного отрицания (AV1502) ![](images/2.png)
+Несмотря на то, что такое свойство, как `customer.HasNoOrders` имеет право на существование, избегайте его использования с отрицанием. Например:
 
 	bool hasOrders = !customer.HasNoOrders;
 
-Double negatives are more difficult to grasp than simple expressions, and people tend to read over the double negative easily.
+Двойное отрицание более сложно для понимания, чем простое выражение, и люди склонны путаться в нем.
 
-### <a name="av1505"></a> Name assemblies after their contained namespace (AV1505) ![](images/3.png)
-All DLLs should be named according to the pattern *Company*.*Component*.dll where *Company* refers to your company's name and *Component* contains one or more dot-separated clauses. For example `AvivaSolutions.Web.Controls.dll`.
+### <a name="av1505"></a> Название сборки должно соответствовать пространству имен, которое она содержит (AV1505) ![](images/3.png)
+Все DLL должны именоваться в соответствии с паттерном  *Company*.*Component*.dll где *Company* это название вашей фирмы, а *Component*  — наименование одного или более пространства имен, разделенных точками. Например:
 
-As an example, consider a group of classes organized under the namespace `AvivaSolutions.Web.Binding` exposed by a certain assembly. According to this guideline, that assembly should be called `AvivaSolutions.Web.Binding.dll`. 
+`AvivaSolutions.Web.Controls.dll`.
 
-**Exception:** If you decide to combine classes from multiple unrelated namespaces into one assembly, consider suffixing the assembly name with `Core`, but do not use that suffix in the namespaces. For instance, `AvivaSolutions.Consulting.Core.dll`.
+В качестве примера можно привести объединение группы классов в пространстве имен `AvivaSolutions.Web.Binding`, которое находится в определенной сборке.  Согласно данной рекомендации эта сборка должна быть названа `AvivaSolutions.Web.Binding.dll`. 
 
-### <a name="av1506"></a> Name a source file to the type it contains (AV1506) ![](images/3.png)
-Use Pascal casing to name the file and don't use underscores.
+**Исключение:** Если вы решите связать классы из различных несвязанных пространств имен в одну сборку, добавьте суффикс `Core` к ее названию. Однако не используйте этот суффикс в названиях пространств имен. Например: `AvivaSolutions.Consulting.Core.dll`.
 
-### <a name="av1507"></a> Limit the contents of a source code file to one type (AV1507) ![](images/3.png)
-**Exception:** Nested types should, for obvious reasons, be part of the same file.
+### <a name="av1506"></a> Называйте файлы с исходным кодом в соответствии с тем типом данных, который он содержит (AV1506) ![](images/3.png)
+Используйте нотацию паскаль для именования файлов и не используйте подчеркивания.
 
-### <a name="av1508"></a> Name a source file to the logical function of the partial type (AV1508) ![](images/3.png)
-When using partial types and allocating a part per file, name each file after the logical part that part plays. For example:
+### <a name="av1507"></a> Ограничивайте содержимое файла с исходным кодом одним типом данных  (AV1507) ![](images/3.png)
+**Исключение:** Вложенные типы, по понятным причинам, должны быть частью того же самого файла.
 
-	// In MyClass.cs
+### <a name="av1508"></a> Наименование файла с исходным кодом, который содержит частичный тип данных, должно отражать назначение этой части (AV1508) ![](images/3.png)
+Когда используются частичные типы и идет разделение частей на файлы, имя каждого файла должно быть логически разделено на две части. Первая часть – название типа. Вторая – роль, которую данный фрагмент играет в типе. Например:
+
+	// В файле MyClass.cs
 	public partial class MyClass
 	{...}
 	
-	// In MyClass.Designer.cs	
+	// В файле MyClass.Designer.cs	
 	public partial class MyClass
 	{...}
 
-### <a name="av1510"></a> Use using statements instead of fully qualified type names (AV1510) ![](images/3.png)
-Limit usage of fully qualified type names to prevent name clashing. For example, don't do this:
+### <a name="av1510"></a> Используйте `using` вместо указания полной ссылки на тип из другого пространства имен (AV1510) ![](images/3.png)
+Не используйте полную ссылку на тип из другого пространства имен в целях предотвращения конфликтов именования. Например, не делайте так:
 
 	var list = new System.Collections.Generic.List();
 
-Instead, do this:
+Лучше сделать так:
 
 	using System.Collections.Generic;
 	
 	var list = new List();
 
-If you do need to prevent name clashing, use a `using` directive to assign an alias:
+Если вам необходимо избежать конфликтов именования, используйте директиву `using` для создания псевдонима пространства имен или типа:
 
 	using Label = System.Web.UI.WebControls.Label;
 
-### <a name="av1515"></a> Don't use "magic" numbers (AV1515) ![](images/1.png)
-Don't use literal values, either numeric or strings, in your code, other than to define symbolic constants. For example:
+### <a name="av1515"></a> Не используйте «магические» числа (AV1515) ![](images/1.png)
+Не используйте литеральные значения, числа или строки в вашем коде ни для чего другого, кроме как для объявления констант. Для примера:
 
 	public class Whatever  
 	{
@@ -65,54 +67,55 @@ Don't use literal values, either numeric or strings, in your code, other than to
 		public const int MaxNumberOfWheels = 18;  
 	}
 
-Strings intended for logging or tracing are exempt from this rule. Literals are allowed when their meaning is clear from the context, and not subject to future changes, For example:
+Строки, предназначенные для логирования или трассировки, являются исключением из этого правила. Литеральные значения допускается использовать только тогда, когда их смысл ясен из контекста и их не планируется изменять. Например:
 
-	mean = (a + b) / 2; // okay  
-	WaitMilliseconds(waitTimeInSeconds * 1000); // clear enough
+	mean = (a + b) / 2; // среднее арифметическое 
+	WaitMilliseconds(waitTimeInSeconds * 1000); // тут тоже все понятно
 
-If the value of one constant depends on the value of another, attempt to make this explicit in the code.
+Если значение одной константы зависит от значения другой, укажите это в своем коде.
 
 	public class SomeSpecialContainer  
 	{  
 		public const int MaxItems = 32;  
-		public const int HighWaterMark = 3 * MaxItems / 4; // at 75%  
+		public const int HighWaterMark = 3 * MaxItems / 4; // 75%  
 	}
 
-**Note:** An enumeration can often be used for certain types of symbolic constants.
+**Заметка:** Перечисления часто могут использоваться в качестве хранилища символьных констант.
 
-### <a name="av1520"></a> Only use var when the type is very obvious (AV1520) ![](images/1.png)
-Only use `var` as the result of a LINQ query, or if the type is very obvious from the same statement and using it would improve readability. So don't
+### <a name="av1520"></a> Используйте `var` только тогда, когда тип переменной очевиден (AV1520) ![](images/1.png)
+Используйте `var` только в том случае, если переменной присваивается результат LINQ-запроса или если тип переменной очевиден и использование var повысит читаемость кода. Например, так делать не стоит:
 
-	var i = 3;									// what type? int? uint? float?
-	var myfoo = MyFactoryMethod.Create("arg");	// Not obvious what base-class or			
-												// interface to expect. Also difficult
-												// to refactor if you can't search for
-												// the class
+	var i = 3;									// Что за тип? int? uint? float?
+	var myfoo = MyFactoryMethod.Create("arg");	// Не понятно, какой тип имеет	
+												// класс или интерфейс. Кроме того,
+												// тяжело изменять код, который работает 
+												// c этой переменной, если исходный класс
+                                                // вам недоступен
 
-Instead, use `var` like this:
+Вместо этого используйте var как в примерах ниже:
 
 	var q = from order in orders where order.Items > 10 and order.TotalValue > 1000;
 	var repository = new RepositoryFactory.Get();	
 	var list = new ReadOnlyCollection();
 
-In all of three above examples it is clear what type to expect. For a more detailed rationale about the advantages and disadvantages of using `var`, read Eric Lippert's [Uses and misuses of implicit typing](http://blogs.msdn.com/b/ericlippert/archive/2011/04/20/uses-and-misuses-of-implicit-typing.aspx).
+Во всех трех примерах тип присваиваемых переменным значений очевиден. Для получения более подробной информации об использовании `var` читайте статью Ерика Липперта [Использование и злоупотребления неявной типизацией](http://blogs.msdn.com/b/ericlippert/archive/2011/04/20/uses-and-misuses-of-implicit-typing.aspx).
 
-### <a name="av1521"></a> Declare and initialize variables as late as possible (AV1521) ![](images/2.png)
-Avoid the C and Visual Basic styles where all variables have to be defined at the beginning of a block, but rather define and initialize each variable at the point where it is needed.
+### <a name="av1521"></a> Объявляйте и инициализируйте переменные как можно позже (AV1521) ![](images/2.png)
+Избегайте стиля языков C и VisualBasic, когда все переменные объявляются в начале блока. Объявляйте и инициализируйте каждую переменную только тогда, когда она необходима.
 
-### <a name="av1522"></a> Assign each variable in a separate statement (AV1522) ![](images/1.png)
-Don't use confusing constructs like the one below:
+### <a name="av1522"></a> Присваивайте значение каждой переменной в отдельном объявлении (AV1522) ![](images/1.png)
+Никогда не делайте так:
 
 	var result = someField = GetSomeMethod();
 
-### <a name="av1523"></a> Favor Object and Collection Initializers over separate statements (AV1523) ![](images/2.png)
-Instead of:
+### <a name="av1523"></a> Предпочитайте инициализаторы объектов и коллекций раздельной установке свойств и раздельному добавлению новых объектов в коллекцию (AV1523) ![](images/2.png)
+Вместо такой конструкции:
 
 	var startInfo = new ProcessStartInfo("myapp.exe");	
 	startInfo.StandardOutput = Console.Output;
 	startInfo.UseShellExecute = true;
 
-Use [Object Initializers](http://msdn.microsoft.com/en-us/library/bb384062.aspx):
+Используйте [инициализатор объекта](http://msdn.microsoft.com/en-us/library/bb384062.aspx):
 
 	var startInfo = new ProcessStartInfo("myapp.exe")  
 	{
@@ -120,45 +123,45 @@ Use [Object Initializers](http://msdn.microsoft.com/en-us/library/bb384062.aspx)
 		UseShellExecute = true  
 	};
 
-Similarly, instead of:
+Вместо создания коллекции — таким образом:
 
 	var countries = new List();
 	countries.Add("Netherlands");
 	countries.Add("United States");
 
-Use collection or [dictionary initializers](http://msdn.microsoft.com/en-us/library/bb531208.aspx):
+Используйте инициализатор коллекции или [словаря](http://msdn.microsoft.com/en-us/library/bb531208.aspx):
 
 	var countries = new List { "Netherlands", "United States" };
 
-### <a name="av1525"></a> Don't make explicit comparisons to `true` or `false` (AV1525) ![](images/1.png)
+### <a name="av1525"></a> Не производите явного сравнения с `true` или `false` (AV1525) ![](images/1.png)
 
-It is usually bad style to compare a `bool`-type expression to `true` or `false`. For example:
+Сравнение логического значения с `true` или `false` – это, как правило, плохой стиль программирования. В качестве примера:
 
-	while (condition == false)// wrong; bad style  
-	while (condition != true)// also wrong  
-	while (((condition == true) == true) == true)// where do you stop?  
+	while (condition == false)// неправильно, плохой стиль 
+	while (condition != true)// тоже неправильно  
+	while (((condition == true) == true) == true)// где ты остановишься?
 	while (condition)// OK
 
-### <a name="av1530"></a> Don't change a loop variable inside a for loop (AV1530) ![](images/2.png)
-Updating the loop variable within the loop body is generally considered confusing, even more so if the loop variable is modified in more than one place.
+### <a name="av1530"></a> Не изменяйте переменную цикла `for` или `foreach` внутри тела цикла (AV1530) ![](images/2.png)
+Обновление переменной цикла внутри тела цикла ведет к тому, что код становится запутанным. Особенно, если переменная изменяется более чем в одном месте.
 
 	for (int index = 0; index < 10; ++index)  
 	{  
 		if (_some condition_)
 		{
-			index = 11; // Wrong! Use 'break' or 'continue' instead.  
+			index = 11; // Неправильно! Вместо этого используйте ‘break’ или ‘continue’. 
 		}
 	}
 
-### <a name="av1532"></a> Avoid nested loops (AV1532) ![](images/2.png)
-A method that nests loops is more difficult to understand than one with only a single loop. In fact, in most cases nested loops can be replaced with a much simpler LINQ query that uses the `from` keyword twice or more to *join* the data.
+### <a name="av1532"></a> Избегайте вложенных циклов (AV1532) ![](images/2.png)
+Методы, содержащие вложенные циклы, более сложны для понимания, чем те, которые содержат только один цикл. По факту, в большинстве случаев циклы могут быть заменены гораздо меньшим по размеру LINQ-запросом, который использует ключевое слово `from` два раза и более для объединения данных.
 
-### <a name="av1535"></a> Always add a block after keywords such as `if`, `else`, `while`, `for`, `foreach` and `case` (AV1535) ![](images/2.png)
-Please note that this also avoids possible confusion in statements of the form:
+### <a name="av1535"></a> Всегда используйте конструкции `if`, `else`, `while`, `for`, `foreach` и `case` с фигурными скобками (AV1535) ![](images/2.png)
+Пожалуйста, обратите внимание, что это также поможет избежать возможной путаницы с конструкциями вроде этой:
 
-	if (b1) if (b2) Foo(); else Bar(); // which 'if' goes with the 'else'?
+	if (b1) if (b2) Foo(); else Bar(); // к какому ‘if’ относится ‘else’?
 	
-	// The right way:  
+	// Лучше сделать так:   
 	if (b1)  
 	{  
 		if (b2)  
@@ -171,8 +174,8 @@ Please note that this also avoids possible confusion in statements of the form:
 		}  
 	}
 
-### <a name="av1536"></a> Always add a `default` block after the last `case` in a `switch` statement (AV1536) ![](images/1.png)
-Add a descriptive comment if the `default` block is supposed to be empty. Moreover, if that block is not supposed to be reached throw an `InvalidOperationException` to detect future changes that may fall through the existing cases. This ensures better code, because all paths the code can travel have been thought about.
+### <a name="av1536"></a> Всегда используйте блок `default` в конце конструкции `switch/case` (AV1536) ![](images/1.png)
+Если блок default будет пуст, добавьте поясняющий комментарий. Кроме того, если этот блок не должен быть достижимым, сгенерируйте при его вызове InvalidOperationException, чтобы обнаружить будущие изменения, при которых ни один из блоков case не будет достигнут. Следование этой рекомендации позволит вам писать более чистый код, потому что все сценарии выполнения уже были продуманы.
 
 	void Foo(string answer)  
 	{  
@@ -198,31 +201,31 @@ Add a descriptive comment if the `default` block is supposed to be empty. Moreov
 		}  
 	}
 
-### <a name="av1537"></a> Finish every if-else-if statement with an else-part (AV1537) ![](images/2.png)
-For example:
+### <a name="av1537"></a> Заканчивайте каждый блок `if-else-if` объявлением `else` (AV1537) ![](images/2.png)
+Например:
 
 	void Foo(string answer)  
 	{  
 		if (answer == "no")  
 		{  
-			Console.WriteLine("You answered with No");  
+			Console.WriteLine("Вы ответили Нет");  
 		}  
 		else if (answer == "yes")  
 		{  
-			Console.WriteLine("You answered with Yes");  
+			Console.WriteLine("Вы ответили Да");  
 		}  
 		else  
 		{  
-			// What should happen when this point is reached? Ignored? If not,   
-			// throw an InvalidOperationException.  
+			// Что должно случиться, когда этот блок выполнится? Игнорировать это?    
+			// Если нет, то  сгенерировать исключение InvalidOperationException.  
 		}  
 	}
 
-### <a name="av1540"></a> Be reluctant with multiple return statements (AV1540) ![](images/2.png)
-One entry, one exit is a sound principle and keeps control flow readable. However, if the method is very small and complies with guideline AV1500 then multiple return statements may actually improve readability over some central boolean flag that is updated at various points.
+### <a name="av1540"></a>Старайтесь избегать нескольких объявлений `return` (AV1540) ![](images/2.png)
+Один вход — одна точка выхода, так звучит этот принцип. Он позволяет поддерживать понятным ход выполнения метода. При этом если метод очень маленький и соответствует рекомендации AV1500, тогда несколько объявлений return могут быть актуальными и улучшат читаемость кода. Например, если метод возвращает логическое значение, удобней использовать два объявления return вместо логической переменной, которую вернет метод и которой будут присваиваться значения по ходу его выполнения.
 
-### <a name="av1545"></a> Don't use if-else statements instead of a simple (conditional) assignment (AV1545) ![](images/2.png)
-Express your intentions directly. For example, rather than:
+### <a name="av1545"></a> Не используйте блок `if-else` вместо простого (условного) присваивания (AV1545) ![](images/2.png)
+Выражайте свои намерения прямо. Например, вместо этого:
 
 	bool pos;
 	
@@ -235,11 +238,11 @@ Express your intentions directly. For example, rather than:
 		pos = false;  
 	}
 
-write:
+Делайте так:
 
-	bool pos = (val > 0); // initialization
+	bool pos = (val > 0); // инициализация
 
-Or instead of:
+Вместо:
 
 	string result;
 	
@@ -254,23 +257,23 @@ Or instead of:
 
 	return result;
 
-write:
+Пишите:
 
 	return someString ?? "Unavailable";
 
-### <a name="av1547"></a> Encapsulate complex expressions in a method or property (AV1547) ![](images/1.png)
-Consider the following example:
+### <a name="av1547"></a> Инкапсулируйте сложное выражение в методе или свойстве (AV1547) ![](images/1.png)
+Рассмотрим следующий пример:
 
 	if (member.HidesBaseClassMember && (member.NodeType != NodeType.InstanceInitializer))
 	{
-		// do something
+		// что-то делаем
 	}
 
-In order to understand what this expression is about, you need to analyze its exact details and all of its possible outcomes. Obviously, you can add an explanatory comment on top of it, but it is much better to replace this complex expression with a clearly named method:
+Чтобы понять, что делает этот код, вам придется вникать в его детали и предвидеть все варианты его выполнения. Конечно, вы можете добавить поясняющий комментарий перед этим кодом, но лучше замените сложное выражение методом, название которого будет говорить само за себя.
 
 	if (NonConstructorMemberUsesNewKeyword(member))  
 	{  
-		// do something
+		// что-то делаем
 	}  
   
   
@@ -281,10 +284,10 @@ In order to understand what this expression is about, you need to analyze its ex
 			(member.NodeType != NodeType.InstanceInitializer)  
 	}
 
-You still need to understand the expression if you are modifying it, but the calling code is now much easier to grasp.
+Если вам потребуется изменить этот метод, вам все равно придется разбираться в том, как он работает. Но теперь гораздо легче понять код, который его вызывает..
 
-### <a name="av1551"></a> Call the more overloaded method from other overloads (AV1551) ![](images/2.png)
-This guideline only applies to overloads that are intended to provide optional arguments. Consider, for example, the following code snippet:
+### <a name="av1551"></a> Вызывайте более перегруженный метод из других перегрузок (AV1551) ![](images/2.png)
+Данное правило применимо только к тем методам, которые перегружены между собой необязательными аргументами. Посмотрите на пример ниже:
 
 	public class MyString  
 	{
@@ -306,53 +309,54 @@ This guideline only applies to overloads that are intended to provide optional a
 		}  
 	}
 
-The class `MyString` provides three overloads for the `IndexOf` method, but two of them simply call the one with one more parameter. Notice that the same rule applies to class constructors; implement the most complete overload and call that one from the other overloads using the `this()` operator. Also notice that the parameters with the same name should appear in the same position in all overloads.
+Класс `MyString` обеспечивает три перегрузки метода `IndexOf`, при этом две их них просто вызывают другую с большим количеством параметров. Заметьте, что это правило применимо к конструкторам класса. Реализуйте наиболее перегруженный конструктор и вызывайте его из других перегрузок, используя оператор `this()`. Также следует отметить, что параметры с одними и теми же именами должны следовать в одном и том же порядке во всех перегрузках.
 
-**Important:** If you also want to allow derived classes to override these methods, define the most complete overload as a `protected virtual` method that is called by all overloads.
+**Важно:** Если вы хотите, чтобы поведение классов можно было менять с помощью переопределения данных методов, то объявите наиболее перегруженный метод как `protected virtual`, который вызывается всеми перегрузками.
 
-### <a name="av1553"></a> Only use optional arguments to replace overloads (AV1553) ![](images/1.png)
-The only valid reason for using C# 4.0's optional arguments is to replace the example from rule AV1551 with a single method like:
+### <a name="av1553"></a> Используйте необязательные аргументы только для того, чтобы заменять перегрузки (AV1553) ![](images/1.png)
+Единственная допустимая причина для использования необязательных аргументов C# 4.0 – это замена примера из правила AV1551 одиночным методом наподобие этого:
 
 	public virtual int IndexOf(string phrase, int startIndex = 0, int count = 0)
 	{
 		return someText.IndexOf(phrase, startIndex, count);
 	}
 
-If the optional parameter is a reference type then it can only have a default value of `null`. But since strings, lists and collections should never be `null` according to rule AV1235, you must use overloaded methods instead.
+Если необязательный параметр является ссылочным типом, то он может иметь в качестве значения по умолчанию только null. Но, как нам известно, string, list и collections никогда не должны быть равны null (согласно правилу AV1135). Поэтому вы должны использовать вместо этого перегруженный метод.
 
-**Note:** The default values of the optional parameters are stored at the caller side. As such, changing the default value without recompiling the calling code will not apply the new default value properly.
+**Примечание:** Компилятор копирует значение необязательных параметров в место вызова. Поэтому, изменение значения по умолчанию для необязательных параметров должно сопровождаться рекомпиляцией вызывающего кода.
 
-**Note:** When an interface method defines an optional parameter, its default value is not considered during overload resolution unless you call the concrete class through the interface reference. See [this post by Eric Lippert](http://blogs.msdn.com/b/ericlippert/archive/2011/05/09/optional-argument-corner-cases-part-one.aspx) for more details.
+**Примечание:** Когда метод класса используется через интерфейс, то передача необязательных параметров не доступна до тех пор, пока объект, который содержит данный метод, не будет приведен к соответствующему классу. Смотрите [статью Эрика Липперта](http://blogs.msdn.com/b/ericlippert/archive/2011/05/09/optional-argument-corner-cases-part-one.aspx) для получения дополнительной интформации.
 
-### <a name="av1555"></a> Avoid using named arguments (AV1555) ![](images/1.png)
-C# 4.0's named arguments have been introduced to make it easier to call COM components that are known for offering many optional parameters. If you need named arguments to improve the readability of the call to a method, that method is probably doing too much and should be refactored.
+### <a name="av1555"></a> Избегайте использования именованных аргументов (AV1555) ![](images/1.png)
+Именованные аргументы C# 4.0 были созданы для того, чтобы облегчить вызов COM компонентов, которые известны тем, что могут предлагать тонны необязательных параметров. Если вам нужны именованные аргументы, чтобы улучшить читаемость вызова для метода, скорее всего, этот метод делает слишком много и он должен быть подвергнут рефакторингу.
 
-**Exception:** The only exception where named arguments improve readability is when calling a method of some code base you don't control that has a `bool` parameter, like this:  
+**Исключение:** Единственным исключением, когда именованые аргументы могут улучшить читаемость, является вызов метода с логическим параметром, исходный код которого вам не доступен. Например:  
 
 	object[] myAttributes = type.GetCustomAttributes(typeof(MyAttribute), inherit: false);
 
-### <a name="av1561"></a> Don't allow methods and constructors with more than three parameters (AV1561) ![](images/1.png)
-If you create a method with more than three parameters, use a structure or class to pass multiple arguments, as explained in the [Specification design pattern](http://en.wikipedia.org/wiki/Specification_pattern). In general, the fewer the parameters, the easier it is to understand the method. Additionally, unit testing a method with many parameters requires many scenarios to test.
+### <a name="av1561"></a>Не допускайте, чтобы метод или конструктор принимал более трех параметров (AV1561) ![](images/1.png)
+Если ваш метод или конструктор принимает более чем три параметра, используйте структуру или класс для их инкапсуляции их в соответствии с паттерном [спецификация](http://en.wikipedia.org/wiki/Specification_pattern). В общем случае, чем меньше число параметров, тем легче понять метод. К тому же юнит-тестирование метода с множеством параметров требует множество сценариев для тестирования.
 
-### <a name="av1562"></a> Don't use `ref` or `out` parameters (AV1562) ![](images/1.png)
-They make code less understandable and might cause people to introduce bugs. Instead, return compound objects.
+### <a name="av1562"></a> Не используйте `ref` и `out` в параметрах (AV1562) ![](images/1.png)
+Они делают код менее понятным и создают предпосылки для ошибок. Вместо этого возвращайте составные объекты в качестве результата выполнения функции.
 
-### <a name="av1564"></a> Avoid methods that take a bool flag (AV1564) ![](images/2.png)
-Consider the following method signature:
+### <a name="av1564"></a>Не создавайте методы, которые принимают в качестве параметра логическое значение (AV1564) ![](images/2.png)
+Посмотрите на следующий метод:
 
 	public Customer CreateCustomer(bool platinumLevel) {}
 
-On first sight this signature seems perfectly fine, but when calling this method you will lose this purpose completely:
+На первый взгляд все выглядит замечательно, но когда вы будете использовать этот метод, смысл логической переменной полностью потеряет свою ясность:
+
 
 	Customer customer = CreateCustomer(true);
 
-Often, a method taking such a flag is doing more than one thing and needs to be refactored into two or more methods. An alternative solution is to replace the flag with an enumeration.
+Обычно, если метод принимает булевый флаг в качестве параметра, то он делает более, чем одну вещь и нуждается в рефакторинге для разделения на два или более метода. Альтернативным решением является замена флага перечислением.
 
-### <a name="av1568"></a> Don't use parameters as temporary variables (AV1568) ![](images/3.png)
-Never use a parameter as a convenient variable for storing temporary state. Even though the type of your temporary variable may be the same, the name usually does not reflect the purpose of the temporary variable.
+### <a name="av1568"></a> Не используйте параметры в качестве временных переменных (AV1568) ![](images/3.png)
+Никогда не используйте параметр в качестве внутренней переменной. Даже если тип параметра может совпадать с тем типом, который вам требуется, то название, как правило, не будет отражать цели временной переменной.
 
-### <a name="av1570"></a> Always check the result of an `as` operation (AV1570) ![](images/1.png)
-If you use `as` to obtain a certain interface reference from an object, always ensure that this operation does not return `null`. Failure to do so may cause a `NullReferenceException` at a much later stage if the object did not implement that interface.
+### <a name="av1570"></a> Всегда проверяйте результат, возвращаемый оператором `as` (AV1570) ![](images/1.png)
+Если вы используйте оператор `as` чтобы привести объект к определенному интерфейсу, то всегда проверяйте возвращаемый им результат на `null`. Невыполнение этого требования может привести к исключению `NullReferenceException` на гораздо поздней стадии выполнении программы, если объект не реализует требуемый интерфейс.
 
-### <a name="av1575"></a> Don't comment out code (AV1575) ![](images/1.png)
-Never check in code that is commented out. Instead, use a work item tracking system to keep track of some work to be done. Nobody knows what to do when they encounter a block of commented-out code. Was it temporarily disabled for testing purposes? Was it copied as an example? Should I delete it?
+### <a name="av1575"></a> Не оставляйте закомментированные участки кода (AV1575) ![](images/1.png)
+Никогда не отправляйте в репозиторий закомментированный код. Вместо этого используйте систему трекинга задач, чтобы следить за тем, какая работа должна быть сделана. Никто впоследствии не догадается, для чего предназначен тот или иной блок закомментированного кода. Он был временно закомментирован для тестирования? Он был скопирован в качестве примера? Должен ли я удалить его?

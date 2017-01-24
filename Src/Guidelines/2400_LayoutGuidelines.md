@@ -2,22 +2,23 @@
 NOTE: Requires Markdown Extra. See http://michelf.ca/projects/php-markdown/extra/
  --> 
 
-#10. Layout Guidelines
+#10. Рекомендации по оформлению
 
-### <a name="av2400"></a> Use a common layout  (AV2400) ![](images/1.png)
+### <a name="av2400"></a> Используйте общие правила оформления (AV2400) ![](images/1.png)
 
-- Keep the length of each line under 130 characters.
+- Держите длину строк в пределах 130 символов.
 
-- Use an indentation of 4 whitespaces, and don't use tabs
+- В качестве отступов используйте 4 пробела и не используйте табуляцию.
 
-- Keep one whitespace between keywords like `if` and the expression, but don't add whitespaces after `(` and before `)` such as: `if (condition == null)`.
+- Вставляйте один пробел между ключевым словом (например `if`) и выражением, но не используйте пробелы после `(` и перед `)`. Например: `if (condition == null)`.
 
-- Add a whitespace around operators like `+`, `-`, `==`, etc.
+- Добавляйте пробел перед и после операторов (например `+`, `-`, `==` и т.д.)
 
-- Always follow the keywords `if`, `else`, `do`, `while`, `for` and `foreach` with opening and closing braces, even though the language does not require it. 
+- Всегда используйте конструкции `if`, `else`, `do`, `while`, `for` и `foreach` с парными фигурными скобками, даже если без этого можно обойтись. 
 
-- Always put opening and closing braces on a new line.
-- Don't indent object Initializers and initialize each property on a new line, so use a format like this: 
+- Открывайте и закрывайте парные скобки всегда в новой строке.
+
+- Не устанавливайте значение каждого свойства объекта в новой строке после инициализации этого объекта. Используйте следующий формат: 
 	
 		var dto = new ConsumerDto()
 		{  
@@ -26,58 +27,59 @@ NOTE: Requires Markdown Extra. See http://michelf.ca/projects/php-markdown/extra
 			PartnerShip = PartnerShip.Gold
 		}
 
-- Don't indent lambda statements and use a format like this:
+- Не разделяйте объявление лямбда-выражения на несколько строк. Используйте формат, как показано ниже:
 
 		methodThatTakesAnAction.Do(x =>
 		{ 
-			// do something like this 
+			// какие-то действия
 		}
 
-- Put the entire LINQ statement on one line, or start each keyword at the same indentation, like this:
+- Объявляйте LINQ-запрос в одной строке или объявляйте каждое ключевое слово этого запроса в новой строке, как показано ниже:
 		
 		var query = from product in products where product.Price > 10 select product;
 
-  	or
+  	или
 	
 		var query =  
 		    from product in products  
 		    where product.Price > 10  
 		    select product;
 
-- Start the LINQ statement with all the `from` expressions and don't interweave them with restrictions.
-- Add parentheses around every comparison condition, but don't add parentheses around a singular condition. For example `if (!string.IsNullOrEmpty(str) && (str != "new"))`
+- Начинайте LINQ-запрос с объявления всех выражений `from` и не перемешивайте их с другими выражениями.
 
-- Add an empty line between multi-line statements, between members, after the closing parentheses, between unrelated code blocks, around the `#region` keyword, and between the `using` statements of different root namespaces.
+- Добавляйте скобки вокруг каждого сравнения в условном выражении, но не добавляйте их вокруг одиночного выражения. Например: `if (!string.IsNullOrEmpty(str) && (str != "new"))`
+
+- Добавляйте пустую строку между многострочными выражениями, членами класса, после закрытия парных скобок, после несвязанных друг с другом блоков кода, перед и после ключевого слова `#region` и между объявлениями `using`, если пространства имен имеют различные корни (корневые пространства имен).
 
 
-### <a name="av2402"></a> Order and group namespaces according to the company  (AV2402) ![](images/3.png)
+### <a name="av2402"></a> Располагайте и группируйте пространства имен в соответствии с названием компании (AV2402) ![](images/3.png)
 
-	// Microsoft namespaces are first
+	// Пространства имен Microsoft первые 
 	using System;
 	using System.Collections;
 	using System.XML;
 	
-	// Then any other namespaces in alphabetic order
+	// Другие пространства имен идут в алфавитном порядке
 	using AvivaSolutions.Business;
 	using AvivaSolutions.Standard;
 	using Telerik.WebControls;
 	using Telerik.Ajax;
 
-### <a name="av2406"></a> Place members in a well-defined order  (AV2406) ![](images/1.png)
-Maintaining a common order allows other team members to find their way in your code more easily. In general, a source file should be readable from top to bottom, as if reading a book, to prevent readers from having to browse up and down through the code file.
+### <a name="av2406"></a> Располагайте члены класса в строго определенном порядке (AV2406) ![](images/1.png)
+Сохранение общего порядка позволяет другим членам команды легче ориентироваться в вашем коде. В общем случае, чтение файла с исходным кодом должно идти сверху вниз, как если бы вы читали книгу. Это предотвращает ситуацию, когда приходится просматривать файл вверх и вниз в поисках нужного фрагмента.
 
-1. Private fields and constants (in a region)
-2. Public constants
-3. Public read-only static fields
-4. Factory Methods
-5. Constructors and the Finalizer
-6. Events 
-7. Public Properties
-8. Other methods and private properties in calling order
+1. Приватные поля и константы (в `#region`)
+2. Публичные константы
+3. Публичные read-only статические поля
+4. Фабричные методы
+5. Конструкторы и финализаторы
+6. События 
+7. Публичные свойства
+8. Прочие методы и приватные свойства в порядке их вызова
 
-### <a name="av2407"></a> Be reluctant with `#regions` (AV2407) ![](images/1.png)
-Regions can be helpful, but can also hide the main purpose of a class. Therefore, use `#regions` only for:
+### <a name="av2407"></a> Будьте осторожны с использованием директивы `#region` (AV2407) ![](images/1.png)
+Ключевое слово `#region` может быть полезно, но оно также может скрывать основное предназначение класса. Следовательно, используйте `#region` только для:
 
-- Private fields and constants (preferably in a `Private Definitions` region).
-- Nested classes
-- Interface implementations (only if the interface is not the main purpose of that class)
+- Приватных полей и констант (предпочтительно в Private Definitions region).
+- Вложенных классов
+- Реализаций интерфейса (только если реализация интерфейса не является основной целью этого класса)

@@ -5,11 +5,11 @@ NOTE: Requires Markdown Extra. See http://michelf.ca/projects/php-markdown/extra
 
 <table width="100%">
 <tr>
-<td class="title">Coding Guidelines for C# 3.0, 4.0 and 5.0 Cheat Sheet</td>
+<td class="title">Рекомендации по написанию кода на C# 3.0, 4.0 и 5.0. Краткое содержание.</td>
 <td rowspan="2" style="text-align:right">![logo](images/logo.png)</td>
 </tr>
 <tr>
-<td><div class="subTitle">Design & Maintainability</div> (level 1 and 2 only)</td>
+<td><div class="subTitle">Дизайн и сопровождаемость</div> (только 1 и 2 уровни важности)</td>
 </tr>
 </table>
 
@@ -17,96 +17,96 @@ NOTE: Requires Markdown Extra. See http://michelf.ca/projects/php-markdown/extra
 <tr>
 <td class="column" markdown="1">
 <div markdown="1" class="sidebar">
-**Basic Principles**
+**Базовые принципы**
 
-* The Principle of Least Surprise   
-* Keep It Simple Stupid   
-* You Ain’t Gonne Need It  
-* Don’t Repeat Yourself
+* Правило наименьшего удивления 
+* Делай это проще  
+* Вам это не понадобится  
+* Не повторяйся
 </div>
 
-**Class Design**
+**Проектирование классов**
 
-*  A class or interface should have a single purpose (AV1000)
-*  An interface should be small and focused (AV1003)  
-*  Use an interface to decouple classes from each other (AV1005)  
-*  Don’t hide inherited members with the `new` keyword (AV1010)  
-*  It should be possible to treat a derived object as if it were a base class object (AV1011)  
-*  Don’t refer to derived classes from the base class (AV1013)  
-*  Avoid exposing the objects an object depends on (AV1014)  
-*  Avoid bidirectional dependencies (AV1020)  
-*  Classes should have state and behavior (AV1025)  
+*  Класс или интерфейс должны иметь единственное предназначение (AV1000)
+*  Интерфейс должен быть небольшим и должен быть сфокусирован на решении одной задачи (AV1003)  
+*  Используйте интерфейс для реализации слабой связанности между классами (AV1005)  
+*  Не скрывайте унаследованные элементы за ключевым словом `new` (AV1010)  
+*  Функции, которые используют базовый тип, должны иметь возможность использовать подтипы базового типа, не зная об этом (AV1011)  
+*  Не ссылайтесь на производные классы из базового класса (AV1013)  
+*  Объект должен обладать ограниченным знанием о других объектах, которые не имеют непосредственного отношения к этому объекту (AV1014)  
+*  Избегайте двунаправленной зависимости (AV1020)  
+*  Классы должны иметь состояние и поведение (AV1025)  
 
 <br/>
-**Member Design**  
+**Проектирование членов класса**  
 
-* Allow properties to be set in any order (AV1100)  
-* Don’t use mutual exclusive properties (AV1110)  
-* A method or property should do only one thing (AV1115)  
-* Don’t expose stateful objects through static members (AV1125)   
-* Return an `IEnumerable<T>` or `ICollection<T>` instead of a concrete collection class (AV1130)   
-* Properties, methods and arguments representing strings or collections should never be `null` (AV1135)  
-* Define parameters as specific as possible (AV1137)   
+* Свойства класса должны иметь возможность быть установленными в любом порядке (AV1100)  
+* Не используйте взаимоисключающие свойства (AV1110)  
+* Метод или свойство должны иметь единственное предназначение (AV1115)  
+* Не выставляйте объекты, описывающие состояние, посредством статических членов (AV1125)   
+* Возвращайте `IEnumerable<T>` или `ICollection<T>` вместо какой-либо конкретной коллекции (AV1130)   
+* Свойства, методы или аргументы, которые представляют из себя строку или коллекцию, никогда не должны быть равны `null` (AV1135)  
+* Определяйте параметры настолько специфичными, насколько это возможно (AV1137)   
 </td>
 <td class="column">
-**Miscellaneous Design**  
+**Общие рекомендации по проектированию**
 
-* Throw exceptions rather than returning status values (AV1200)  
-* Provide a rich and meaningful exception message text (AV1202)  
-* Don’t swallow errors by catching generic exceptions  (AV1210)  
-* Always check an event handler delegate for `null` (AV1220)  
-* Properly handle exceptions in asynchronous code (AV1215)  
-* Use a protected virtual method to raise each event (AV1225)  
-* Don’t pass `null` as the sender parameter when raising an event (AV1235)  
-* Use generic constraints if applicable (AV1240)  
-* Evaluate the result of a LINQ expression before returning it (AV1250)  
+* Генерируйте исключение вместо возвращения статусного сообщения (AV1200)
+* Обеспечьте полное и осмысленное сообщение об исключении (AV1202)
+* Не игнорируйте ошибку путем обработки общих исключений (AV1210)
+* Обрабатывайте исключения в асинхронном коде должным образом (AV1215)
+* Всегда проверяйте делегат обработчика события на `null` (AV1220)
+* Для вызова каждого события используйте защищенный виртуальный метод (AV1225)
+* Не отправляйте `null` в качестве аргумента при вызове события (AV1235)
+* Используйте общие ограничения, если возможно (AV1240)
+* Вычисляйте результат LINQ-запроса до того, как вернуть его (AV1250)
 
 <br/>
-**Maintainability**  
+**Сопровождаемость**  
 
-* Methods should not exceed 7 statements (AV1500)  
-* Make all members `private` and types `internal` by default (AV1501)  
-* Avoid conditions with double negatives (AV1502)  
-* Don’t use "magic numbers" (AV1515)  
-* Only use `var` when the type is very obvious (AV1520)  
-* Declare and initialize variables as late as possible (AV1521)  
-* Favor Object and Collection Initializers over separate statements (AV1523)  
-* Don’t make explicit comparisons to `true` or `false` (AV1525)  
-* Don’t change a loop variable inside a `for` or `foreach` loop (AV1530)  
-* Avoid nested loops (AV1532)  
+* В методе не должно быть более 7 объявлений (AV1500)  
+* Создавайте все члены класса `private`, а типы `internal` по умолчанию (AV1501)  
+* Избегайте двойного отрицания (AV1502)  
+* Не используйте «магические» числа (AV1515)  
+* Используйте `var` только тогда, когда тип переменной очевиден (AV1520)  
+* Объявляйте и инициализируйте переменные как можно позже (AV1521)  
+* Предпочитайте инициализаторы объектов и коллекций раздельной установке свойств и раздельному добавлению новых объектов в коллекцию (AV1523)  
+* Не производите явного сравнения с `true` или `false` (AV1525)  
+* Не изменяйте переменную цикла `for` или `foreach` внутри тела цикла (AV1530)  
+* Избегайте вложенных циклов (AV1532)  
 </td>
 <td class="column">
-* Always add a block after keywords such `if`, `else`, `while`, `for`, `foreach` and `case` (AV1535)  
-* Always add a `default` block after the last `case` in a `switch` statement (AV1536)  
-* Finish every `if`-`else`-`if `statement with an `else`-part (AV1537)  
-* Be reluctant with multiple `return` statements (AV1540)  
-* Don’t use `if`-`else` statements instead of a simple (conditional) assignment  (AV1545)  
-* Encapsulate complex expressions in a method or property (AV1547)  
-* Call the most overloaded method from other overloads (AV1551)  
-* Only use optional arguments to replace overloads (AV1553)  
-* Avoid using named arguments (AV1555)  
-* Don’t allow methods and constructors with more than three parameters (AV1561)  
-* Don’t use `ref` or `out` parameters (AV1562)  
-* Avoid methods that take a `bool` flag (AV1564)  
-* Always check the result of an `as` operation (AV1570)  
-* Don’t comment-out code (AV1575)  
+* Всегда используйте конструкции `if`, `else`, `while`, `for`, `foreach` и `case` с фигурными скобками (AV1535)  
+* Всегда используйте блок `default` в конце конструкции `switch/case` (AV1536)  
+* Заканчивайте каждый блок `if-else-if` объявлением `else` (AV1537)  
+* Старайтесь избегать нескольких объявлений `return` (AV1540)  
+* Не используйте блок `if-else` вместо простого (условного) присваивания (AV1545)  
+* Инкапсулируйте сложное выражение в методе или свойстве (AV1547)  
+* Вызывайте наиболее перегруженный метод из других перегрузок (AV1551)  
+* Используйте необязательные аргументы только для того, чтобы заменять перегрузки (AV1553)  
+* Избегайте использования именованных аргументов (AV1555)  
+* Не допускайте, чтобы метод или конструктор принимал более трех параметров (AV1561)  
+* Не используйте `ref` и `out` в параметрах (AV1562)  
+* Не создавайте методы, которые принимают в качестве параметра логическое значение (AV1564)  
+* Всегда проверяйте результат, возвращаемый оператором `as` (AV1570)  
+* Не оставляйте закомментированные участки кода (AV1575)  
 
 <br/>
-**Framework Guidelines**  
+**Использование фреймворка**  
 
-* Use C# type aliases instead of the types from the `System` namespace (AV2201)  
-* Build with the highest warning level (AV2210)  
-* Use Lambda expressions instead of delegates (AV2221)  
-* Only use the `dynamic` keyword when talking to a dynamic object (AV2230)  
-* Favor `async`/`await` over the `Task` (AV2235)  
+* Используйте псевдонимы типов C# вместо типов из пространства имен `System` (AV2201)  
+* Осуществляйте сборку с наивысшим уровнем предупреждений (AV2210)  
+* Используйте лямбда-выражения вместо делегатов (AV2221)  
+* Используйте ключевое слово `dynamic` только при работе с объектами этого типа (AV2230)  
+*  Старайтесь использовать `async`/`await` вместе с `Task` (AV2235)  
 </td>
 <tr>
 
 <table width="100%" class="footer">
 <tr>
 <td>
-  Dennis Doomen    
-  Version %semver% (%commitdate%)  
+  Денис Думен (Dennis Doomen)    
+  Версия %semver% (%commitdate%)  
 </td>
 <td style="text-align:right">
   [www.csharpcodingguidelines.com](http://www.csharpcodingguidelines.com)  
@@ -118,11 +118,11 @@ NOTE: Requires Markdown Extra. See http://michelf.ca/projects/php-markdown/extra
 
 <table width="100%" style="page-break-before: always;">
  <tr>
-  <td class="title">Coding Guidelines for C# 3.0, 4.0 and 5.0 Cheat Sheet</td>
+  <td class="title">Рекомендации по написанию кода на C# 3.0, 4.0 и 5.0. Краткое содержание.</td>
   <td markdown="1" rowspan="2" style="text-align:right">![logo](images/logo.png)</td>
  </tr>
  <tr>
- <td><div class="subTitle">Naming & Layout</div> (level 1 and 2 only)</td>
+ <td><div class="subTitle">Именование и оформление</div> (только 1 и 2 уровни важности)</td>
  </tr>
 </table>
 
@@ -131,100 +131,100 @@ NOTE: Requires Markdown Extra. See http://michelf.ca/projects/php-markdown/extra
 <td class="column" markdown="1">
 <div class="sidebar">
 
-|**Pascal Casing**||
+|**Нотация паскаль**||
 |:-------------------------------|-----------|
-|Class, Struct					|`AppDomain`|
-|Interface 						|`IBusinessService`|
-|Enumeration type 				|`ErrorLevel`
-|Enumeratiion values			|`FatalError`
-|Event 							|`Click`
-|Protected field 				|`MainPanel`
-|Const field 					|`MaximumItems`
-|Read-only static field&nbsp;&nbsp;			|`RedValue`	
-|Method 						|`ToString`
-|Namespace 						|`System.Drawing`
-|Property 						|`BackColor`
-|Type Parameter					|`TEntity`
+|Класс, структура				|`AppDomain`|
+|Интерфейс 						|`IBusinessService`|
+|Перечисление (тип) 			|`ErrorLevel`
+|Перечисление (значение)		|`FatalError`
+|Событие 						|`Click`
+|Защищенное поле 				|`MainPanel`
+|Константное поле 				|`MaximumItems`
+|Read-only статическое поле&nbsp;&nbsp;		|`RedValue`	
+|Метод 							|`ToString`
+|Пространство имен 				|`System.Drawing`
+|Свойство 						|`BackColor`
+|Параметры типа					|`TEntity`
 | |  
-|<br/>**Camel Casing**||
-|Private field					|`listItem`
-|Variable 						|`listOfValues`
-|Const variable					|`maximumItems`
-|Parameter 						|`typeName`
+|<br/>**Верблюжья нотация**||
+|Приватное поле					|`listItem`
+|Локальная переменная			|`listOfValues`
+|Константная локальная переменная&nbsp;&nbsp; 	|`maximumItems`
+|Параметр 						|`typeName`
 
 </div>
 
 <br/>
-**Naming**  
+**Именование**  
 
-* Use US English (AV1701)
-* Don’t include numbers in variables, parameters and type members  (AV1704)
-* Don’t prefix fields (AV1705)
-* Don’t use abbreviations (AV1706)
-* Name members, parameters or variables according its meaning and not its type (AV1707)
-* Name types using nouns, noun phrases or adjective phrases (AV1708)
-* Don’t repeat the name of a class or enumeration in its members (AV1710)
-* Avoid short names or names that can be mistaken with other names (AV1712)
-* Name methods using verb-object pair (AV1720)
-* Name namespaces using names, layers, verbs and features (AV1725)
+* Используйте американский английский язык (AV1701)
+* Не включайте числа в наименования переменных, параметров и типов   (AV1704)
+* Не используйте префиксы в названиях полей (AV1705)
+* Не используйте аббревиатуры (AV1706)
+* Называйте члены класса, параметры и переменные в соответствии с их назначением, а не типом (AV1707)
+* Именуйте типы, используя словосочетания из существительных или прилагательных (AV1708)
+* Не повторяйте имя класса или перечисления в названиях их членов (AV1710)
+* Избегайте коротких имен или имен, которые можно спутать с другими наименованиями (AV1712)
+* Именуйте методы, используя связку глагол-объект (AV1720)
+* В названиях пространств имен используйте имена собственные, названия модулей (слоев), глаголы и слова, описывающие особенности данного пространства имен (AV1725)
 </td>
 <td class="column">
 
-* Use an underscore for irrelevant lambda parameters (AV1739)
+* Используйте символ подчеркивание для параметров лямбда-выражений, которые не имеют значения (AV1739)
 
 
-**Documentation**  
+**Документирование**  
 
-* Write comments and documentation in US English (AV2301)
-* Document all public, protected and internal types and members (AV2305)
-* Avoid inline comments (AV2310)
-* Only write comments to explain complex algorithms or decisions (AV2316)
-* Don’t use comments for tracking work to be done later (AV2318)
+* Пишите комментарии и документацию на американском английском (AV2301)
+* Документируйте все `public`, `protected` и `internal` типы и члены (AV2305)
+* Избегайте инлайновых комментариев (AV2310)
+* Пишите комментарии только для того, чтобы объяснить сложные решения и алгоритмы (AV2316)
+* Не используйте комментарии для отслеживания работы, которая должна быть сделана позднее (AV2318)
 <br/>
 
-**Layout**
+**Оформление**
 
-* Maximum line length is 130 characters.
-* Indent 4 spaces, don’t use Tabs
-* Keep one white-space between keywords like `if` and the expression, but don’t add white-spaces after `(` and before `)`.
-* Add a white-space around operators, like `+`, `-`, `==`, etc.
-* Always add parentheses after keywords `if`, `else`, `do`, `while`, `for` and `foreach`
-* Always put opening and closing parentheses on a new line.
-* Don’t indent object initializers and initialize each property on a new line.
-* Don’t indent lambda statements
-* Put the entire LINQ statement on one line, or start each keyword at the same indentation.
-* Add braces around comparison conditions, but don’t add braces around a singular condition. 
+* Держите длину строк в пределах 130 символов.
+* В качестве отступов используйте 4 пробела и не используйте табуляцию.
+* Вставляйте один пробел между ключевым словом (например `if`) и выражением, но не используйте пробелы после `(` и перед `)`.
+* Добавляйте пробел перед и после операторов (например `+`, `-`, `==` и т.д.)
+* Всегда используйте конструкции `if`, `else`, `do`, `while`, `for` и `foreach` с парными фигурными скобками.
+* Открывайте и закрывайте парные скобки всегда в новой строке.
+* Используйте инициализатор вместо установки каждого свойства в новой строке после инициализации этого объекта.
+* Не разделяйте объявление лямбда-выражения на несколько строк.
+* Объявляйте LINQ-запрос в одной строке или объявляйте каждое ключевое слово этого запроса в новой строке.
+* Добавляйте скобки вокруг каждого сравнения в условном выражении, но не добавляйте их вокруг одиночного выражения.
 </td>
 <td class="column">
 
 <div markdown="1" class="sidebar">
-**Empty lines**
+**Пустые строки**
 
-* Between members
-* After the closing parentheses
-* Between multi-line statements
-* Between unrelated code blocks 
-* Around the `#region` keyword
-* Between the `using` statements of different root namespaces.
+* Между членами класса
+* После закрытия парных скобок
+* После многострочных выражений
+* Между несвязанных друг с другом блоков кода 
+* Вокруг директивы `#region`
+* Между объявлениями `using`, если пространства имен имеют различные корни (корневые пространства имен).
 </div>
 
 <div class="sidebar">
-**Member order**
+**Порядок членов класса**
 
-1.	Private fields and constants
-1.	Public constants
-1.	Public read-only static fields
-1.	Factory Methods
-1.	Constructors and the Finalizer
-1.	Events 
-1.	Public Properties
-1.	Other methods and private properties in calling order
+1.	Приватные поля и константы
+2.	Публичные константы
+3.	Публичные read-only статические поля
+4.	Фабричные методы
+5.	Конструкторы и финализаторы
+6.	События 
+7.	Публичные свойства
+8.	Прочие методы и приватные свойства в порядке их вызова
 </div>
 
 <div markdown="1" class="sidebar">
-**Important Note**
+**Важное замечание**
 
-These coding guidelines are an extension to Visual Studio's Code Analysis functionalty, so make sure you enable that for all your projects. Check the full document for more details.
+Эти рекомендации не входят в стандартный набор правил анализатора кода в Visual Studio. Убедитесь в том, что вы добавили данные рекомендации в анализатор. Для получения более подробной информации обратитесь к полной версии данных стандартов.
 </div>
 
 <td/>
@@ -233,8 +233,8 @@ These coding guidelines are an extension to Visual Studio's Code Analysis functi
 <table width="100%" class="footer">
 <tr>
  <td>
-   Dennis Doomen    
-   Version %semver% (%commitdate%)   
+   Денис Думен (Dennis Doomen)   
+   Версия %semver% (%commitdate%)   
  </td>
  <td style="text-align:right">
   [www.csharpcodingguidelines.com](http://www.csharpcodingguidelines.com)  

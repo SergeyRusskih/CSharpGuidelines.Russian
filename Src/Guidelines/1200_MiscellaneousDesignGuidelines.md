@@ -2,33 +2,33 @@
 NOTE: Requires Markdown Extra. See http://michelf.ca/projects/php-markdown/extra/
  --> 
 
-#4. Miscellaneous Design Guidelines
+#4. Общие рекомендации по проектированию
 
-### <a name="av1200"></a> Throw exceptions rather than returning some kind of status value (AV1200) ![](images/2.png)
+### <a name="av1200"></a> Генерируйте исключение вместо возвращения статусного сообщения (AV1200) ![](images/2.png)
 
-A code base that uses return values to report success or failure tends to have nested if-statements sprinkled all over the code. Quite often, a caller forgets to check the return value anyway. Structured exception handling has been introduced to allow you to throw exceptions and catch or replace them at a higher layer. In most systems it is quite common to throw exceptions whenever an unexpected situation occurs.
+Кодовая база, которая использует возвращаемое статусное сообщение для определения завершилась ли операция успешно или нет, зачастую имеет вложенные `if` выражения, разбросанные по всему коду. Зачастую пользователи забывают проверить возвращаемое значение. Структурированная обработка исключений была введена для того, чтобы позволить вам генерировать исключения и отлавливать или заменять их на более высоком уровне. В большинстве систем является довольно распространенной практикой генерировать исключения всякий раз, когда происходит неожиданная ситуация.
 
-### <a name="av1202"></a> Provide a rich and meaningful exception message text (AV1202) ![](images/2.png)
+### <a name="av1202"></a> Обеспечьте полное и осмысленное сообщение об исключении (AV1202) ![](images/2.png)
 
-The message should explain the cause of the exception, and clearly describe what needs to be done to avoid the exception.
+Сообщение должно объяснять, что привело к исключению и ясно описывать, что нужно сделать, чтобы избежать его в дальнейшем.
 
-### <a name="av1205"></a> Throw the most specific exception that is appropriate (AV1205) ![](images/3.png)
+### <a name="av1205"></a> Генерируйте настолько специфичное исключение, насколько это возможно (AV1205) ![](images/3.png)
 
-For example, if a method receives a `null` argument, it should throw `ArgumentNullException` instead of its base type `ArgumentException`.
+Например, если метод принял в качестве входного параметра `null`, следует сгенерировать `ArgumentNullException` вместо `ArgumentException`.
 
-### <a name="av1210"></a> Don't swallow errors by catching generic exceptions  (AV1210) ![](images/1.png)
+### <a name="av1210"></a> Не игнорируйте ошибку путем обработки общих исключений (AV1210) ![](images/1.png)
 
-Avoid swallowing errors by catching non-specific exceptions, such as `Exception`, `SystemException`, and so on, in application code. Only top-level code, such as a last-chance exception handler, should catch a non-specific exception for logging purposes and a graceful shutdown of the application.
+Не игнорируйте ошибки путем обработки общих исключений, таких как `Exception`, `SystemException` и другие в коде приложения. Только обработчик ошибок самого верхнего уровня должен отлавливать общие исключения с целью логирования и корректного завершения работы приложения.
 
-### <a name="av1215"></a> Properly handle exceptions in asynchronous code (AV1215) ![](images/2.png)
-When throwing or handling exceptions in code that uses `async`/`await` or a `Task` remember the following two rules:
+### <a name="av1215"></a> Обрабатывайте исключения в асинхронном коде должным образом (AV1215) ![](images/2.png)
+Когда вы генерируете или обрабатываете исключения в коде, который использует `async`/`await` или `Task` помните о следующих двух правилах:
 
-- Exceptions that occur within an `async`/`await` block and inside a `Task`'s action are propagated to the awaiter.
-- Exceptions that occur in the code preceding the asynchronous block are propagated to the caller.
+- Исключения, которые возникают в пределах блоков `async`/`await` и внутри `Task`, распространяются на задачу, которая ожидает выполнение этих блоков.
+- Исключения, которые возникли в коде, предшествующем `async`/`await` и `Task`, распространяются на вызывающий код.
 
-### <a name="av1220"></a> Always check an event handler delegate for `null` (AV1220) ![](images/1.png)
+### <a name="av1220"></a> Всегда проверяйте делегат обработчика события на `null` (AV1220) ![](images/1.png)
 
-An event that has no subscribers is `null`, so before invoking, always make sure that the delegate list represented by the event variable is not `null`. Furthermore, to prevent conflicting changes from concurrent threads, use a temporary variable to prevent concurrent changes to the delegate.
+Событие, которое не имеет подписок, равно `null`. Таким образом, перед тем, как оно будет вызвано, убедитесь, что список делегатов, представляющих это событие, не равен `null`. Кроме того, чтобы избежать конфликтов при изменении из параллельных потоков, используйте временную переменную, чтобы избежать одновременного изменения.
 
 	event EventHandler Notify;
 	
@@ -38,37 +38,36 @@ An event that has no subscribers is `null`, so before invoking, always make sure
 		if (handlers != null)  
 		{  
 		    handlers(this, args); 
-		
 		}
 	}
 
-**Tip:** You can prevent the delegate list from being empty altogether. Simply assign an empty delegate like this:
+**Подсказка:** Вы можете сделать так, чтобы список делегатов не был совсем пустым. Просто объявите пустой делегат так, как показано ниже:
 
 	event EventHandler Notify = delegate {};
 
-### <a name="av1225"></a> Use a protected virtual method to raise each event (AV1225) ![](images/2.png)
-Complying with this guideline allows derived classes to handle a base class event by overriding the protected method. The name of the protected virtual method should be the same as the event name prefixed with `On`. For example, the protected virtual method for an event named `TimeChanged` is named `OnTimeChanged`.
+### <a name="av1225"></a> Для вызова каждого события используйте защищенный виртуальный метод (AV1225) ![](images/2.png)
+Выполнение этой рекомендации позволит производным классам обрабатывать событие базового класса путем переопределения защищенного метода. Название защищенного виртуального метода должно быть таким же, как название события, но с префиксом `On`. Например, защищенный виртуальный метод для события с названием `TimeChanged` должен быть назван `OnTimeChanged`.
 
-**Note:** Derived classes that override the protected virtual method are not required to call the base class implementation. The base class must continue to work correctly even if its implementation is not called.
+**Подсказка:** От производных классов, которые переопределяют защищенный виртуальный метод, не требуется вызывать реализацию базового класса. Базовый класс должен продолжать свою работу корректно, даже если его реализация не вызвана.
 
-### <a name="av1230"></a> Consider providing property-changed events (AV1230) ![](images/3.png)
-Consider providing events that are raised when certain properties are changed. Such an event should be named `PropertyChanged`, where `Property` should be replaced with the name of the property with which this event is associated
+### <a name="av1230"></a> Использование событий уведомления об изменении свойств (AV1230) ![](images/3.png)
+Событие уведомления об изменении свойства должно иметь название наподобие `PropertyChanged`, где `Property` должно быть изменено на название свойства, с которым связано это событие.
 
-**Note:** If your class has many properties that require corresponding events, consider implementing the `INotifyPropertyChanged` interface instead. It is often used in the [Presentation Model](http://martinfowler.com/eaaDev/PresentationModel.html) and [Model-View-ViewModel](http://msdn.microsoft.com/en-us/magazine/dd419663.aspx) patterns.
+**Подсказка:** Если ваш класс имеет множество свойств, которые требуют соответствующих событий, попробуйте реализовать вместо этого интерфейс `INotifyPropertyChanged`. Он часто используется в паттернах [Presentation Model](http://martinfowler.com/eaaDev/PresentationModel.html) и [Model-View-ViewModel](http://msdn.microsoft.com/en-us/magazine/dd419663.aspx).
 
-### <a name="av1235"></a> Don't pass `null` as the `sender` argument when raising an event  (AV1235) ![](images/1.png)
+### <a name="av1235"></a> Не отправляйте `null` в качестве аргумента при вызове события (AV1235) ![](images/1.png)
 
-Often an event handler is used to handle similar events from multiple senders. The sender argument is then used to get to the source of the event. Always pass a reference to the source (typically `this`) when raising the event. Furthermore don't pass `null` as the event data parameter when raising an event. If there is no event data, pass `EventArgs.Empty` instead of `null`.
+Зачастую обработчик событий используется для обработки схожих событий от множества отправителей. В таком случае передаваемый аргумент используется для того, чтобы передать контекст вызова события. Всегда отправляйте ссылку на контекст (обычно `this`) при вызове события. Кроме того, не отправляйте `null` при вызове события, если оно не имеет данных. Если событие не имеет данных, отправьте `EventArgs.Empty` вместо `null`.
 
-**Exception:** On static events, the sender argument should be `null`.
+**Исключение:** Для статических событий передаваемый аргумент должен быть `null`.
 
-### <a name="av1240"></a> Use generic constraints if applicable (AV1240) ![](images/2.png)
-Instead of casting to and from the object type in generic types or methods, use `where` constraints or the `as` operator to specify the exact characteristics of the generic parameter. For example:
+### <a name="av1240"></a> Используйте общие ограничения, если возможно (AV1240) ![](images/2.png)
+Вместо приведения и преобразования типа из конкретного в общий и наоборот используйте ключевое слово `where` или оператор `as`, чтобы привести объект к конкретному типу. Например:
 
 	class SomeClass  
 	{}
 	
-	// Don't  
+	// Неправильно  
 	class MyClass  
 	{
 		void SomeMethod(T t)  
@@ -78,7 +77,7 @@ Instead of casting to and from the object type in generic types or methods, use 
 		}  
 	}
 	
-	// Do  
+	// Правильно  
 	class MyClass where T : SomeClass  
 	{
 		void SomeMethod(T t)  
@@ -87,20 +86,19 @@ Instead of casting to and from the object type in generic types or methods, use 
 		}  
 	}
 
-### <a name="av1250"></a> Evaluate the result of a LINQ expression before returning it  (AV1250) ![](images/1.png)
+### <a name="av1250"></a> Вычисляйте результат LINQ-запроса до того, как вернуть его (AV1250) ![](images/1.png)
 
-Consider the following code snippet
+Посмотрите на следующий код:
 	
 	public IEnumerable GetGoldMemberCustomers()
 	{
 		const decimal GoldMemberThresholdInEuro = 1000000;
 		
-		var query = 
-			from customer in db.Customers
-			where customer.Balance > GoldMemberThresholdInEuro
-			select new GoldMember(customer.Name, customer.Balance);
+		var query = from customer in db.Customers
+					where customer.Balance > GoldMemberThresholdInEuro
+					select new GoldMember(customer.Name, customer.Balance);
 		
 		return query;  
 	}
 
-Since LINQ queries use deferred execution, returning `query` will actually return the expression tree representing the above query. Each time the caller evaluates this result using a `foreach` cycle or similar, the entire query is re-executed resulting in new instances of `GoldMember` every time. Consequently, you cannot use the `==` operator to compare multiple `GoldMember` instances. Instead, always explicitly evaluate the result of a LINQ query using `ToList()`, `ToArray()` or similar methods.
+Поскольку LINQ-запросы используют отложенное выполнение, возвращение `q`, как это ни странно, вернет древо выражения, представляющее вышеуказанный запрос. Всякий раз, когда пользователь вычисляет результат, используя `foreach` или что-то похожее, весь запрос выполняется заново, создавая каждый раз новые экземпляры `GoldMember`. Как следствие, вы не сможете использовать оператор `==`, чтобы сравнить различные экземпляры `GoldMember`. Вместо этого всегда явно вычисляйте результат LINQ-запроса, используя `ToList()`, `ToArray()` или схожие методы.

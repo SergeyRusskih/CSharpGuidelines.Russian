@@ -1,26 +1,29 @@
-Coding Guidelines for C# 3.0, 4.0 and 5.0
+Рекомендации по написанию кода на C# 3.0, 4.0 и 5.0
 ================
 
 [![Join the chat at https://gitter.im/dennisdoomen/csharpguidelines](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dennisdoomen/csharpguidelines?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build status](https://ci.appveyor.com/api/projects/status/abdiejvl9jp9h60l?svg=true)](https://ci.appveyor.com/project/dennisdoomen/csharpguidelines)
 
-##What is this##
-This document attempts to provide guidelines (or coding standards if you like) for coding in C# 3.0, 4.0 or 5.0 that are both useful and pragmatic. Of course, if you create such a document you should practice what you preach. So rest assured, these guidelines are representative to what we at [Aviva Solutions](http://www.avivasolutions.nl) do in our day-to-day work. Notice that not all guidelines have a clear rationale. Some of them are simply choices we made at Aviva Solutions. In the end, it doesn't matter what choice you made, as long as you make one and apply it consistently.
+##От переводчика##
+Этот документ представляет из себя перевод [Coding Guidelines for C# 3.0, 4.0 and 5.0](https://github.com/dennisdoomen/CSharpGuidelines) от [Aviva Solutions](http://www.avivasolutions.nl).
 
-##Why would you use this document?##
-Although some might see coding guidelines as undesired overhead or something that limits creativity, this approach has already proven its value for many years. This is because not every developer:
+##Что это##
+Целью создания этого списка правил является попытка установить стандарты написания кода на C#, которые были бы удобными и практичными одновременно. Само собой, мы практикуем то, что создали. Эти правила являются одним из тех стандартов, которые лежат в основе нашей ежедневной работы в [Aviva Solutions](http://www.avivasolutions.nl). Не все эти правила имеют четкое обоснование. Некоторые из них просто приняты у нас в качестве стандартов. В конце-концов, не столько важен сам выбор, а важно то, как строго вы следуйте выбранным правилам.
 
-- is aware that code is generally read 10 times more than it is changed;
-- is aware of the potential pitfalls of certain constructions in C#;
-- is up to speed on certain conventions when using the .NET Framework such as `IDisposable` or the deferred execution nature of LINQ;
-- is aware of the impact of using (or neglecting to use) particular solutions on aspects like security, performance, multi-language support, etc;
-- realizes that not every developer is as capable, skilled or experienced to understand elegant, but potentially very abstract solutions;
+##Зачем мне это использовать?##
+Некоторые воспринимают стандарты написания кода как некие ограничения, которые ущемляют свободу творчества. Но тем не менее такой подход оправдан и проверен в течение многих лет. Почему? Потому, что не каждый разработчик знает, что:
 
-##Where do I get them?##
-Go to the [Releases](https://github.com/dennisdoomen/CSharpGuidelines/releases) page to find the latest HTML, PDF and other related files.
+- на то, чтобы разобраться в коде уходит в 10 раз больше времени, чем на то, чтобы его изменить;
+- не каждый разработчик знает о тонкостях использования основных конструкций в C#;
+- не каждый знает о том, каких соглашений .NET Framework следует придерживаться, например, при использовании `IDisposable` или LINQ с его отложенным исполнением;
+- не каждый знает, как частные решения какой-либо задачи могут повлиять на производительность, безопасность, поддержку нескольких языков и т.д.;
+- не каждый разработчик сможет понять красивый, но абстрактный код другого разработчика;
 
-##Can I create my own version?##
-Absolutely. The corresponding [license](https://github.com/dennisdoomen/CSharpGuidelines/blob/master/LICENSE.md) allows you to fork, adapt and distribute that modified version within your organization as long as you refer back to the original version here. It's not required, but you would make me a very happy man if you credit me as the original author. And if you have any great ideas, recommendations or corrections, either submit an issue, or even better, fork the repository and provide me with a pull request. Just run the following command-line to compile the Markdown versions of the guidelines and cheatsheet to Markdown.
+##Где я могу их получить?##
+На странице [Releases](https://github.com/dennisdoomen/CSharpGuidelines.Russian/releases) вы сможете найти самую свежую версию данных стандартов в форматах HTML, PDF а также некоторые дополнительные файлы.
+
+##Могу ли я создать свою собственную версию?##
+Конечно. Лицензионное соглашение [license](https://github.com/dennisdoomen/CSharpGuidelines/blob/master/LICENSE.md)  позволяет вам копировать, адаптировать и распространять модифицированную версию этих рекомендаций в пределах вашей организации при условии указания ссылки на оригинальную версию. Это условие не является обязательным, но я буду очень благодарен, если вы укажете ссылку на меня как на автора. Я буду очень рад, если у вас есть какие-либо замечательные идеи, рекомендации, замечания или, что еще лучше, вы хотите сделать pull request. Запустите следующую команду из командной строки чтобы собрать Markdown версию данных рекомендаций.
 
   `build.bat`
   

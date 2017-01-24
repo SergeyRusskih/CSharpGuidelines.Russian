@@ -2,34 +2,34 @@
 NOTE: Requires Markdown Extra. See http://michelf.ca/projects/php-markdown/extra/
  --> 
 
-#A1. Important Resources
-##The companion website
-This document is part of an effort to increase the consciousness with which C# developers do their daily job on a professional level. Therefore I've started a dedicated CodePlex site that can be found at [www.csharpcodingguidelines.com](http://www.csharpcodingguidelines.com).
+#A1. Важные ресурсы
+##Сайт компании
+Это документ является частью усилий, направленных на то, чтобы ежедневная работа C# разработчиков шла на профессиональном уровне. Поэтому я размещаю эти рекомендации на сайте CodePlex. Вы легко сможете найти их по ссылке [www.csharpcodingguidelines.com](http://www.csharpcodingguidelines.com).
 
-In addition to the most up to date version of this document, you'll find:
+В дополнение к самой свежей версии этого документа вы найдете там:
 
-- A companion quick-reference sheet
-- Visual Studio 2010/2012 Rule Sets for different types of systems.
-- [ReSharper](http://www.jetbrains.com/resharper/download/) layout configurations matching the rules in chapter 10.
-- A place to discuss C# coding quality.
+- Список кратких ссылок на данное руководство.
+- Набор правил для Visual Studio 2010/2012 для различных типов систем.
+- Набор правил для [ReSharper](http://www.jetbrains.com/resharper/download/), которые соответствуют рекомендациям из главы 10.
+- Площадку для обсуждения качества написания кода на C#.
 
-##Useful links
-In addition to the many links provided throughout this document, I'd like to recommend the following books, articles and sites for everyone interested in software quality:
+##Полезные ссылки
+В дополнение ко многим ссылкам, указанным в этом документе, я хотел бы рекомендовать следующие книги, статьи и сайты для всех, кто интересуется качеством программного обеспечения:
 
 * [Code Complete: A Practical Handbook of Software Construction](http://www.amazon.com/Code-Complete-Practical-Handbook-Construction/dp/0735619670) (Steve McConnel)  
-One of the best books I've ever read. It deals with all aspects of software development, and even though the book was originally written in 2004 you'll be surprised when you see how accurate it still is. I wrote a [review](http://www.continuousimprover.com/2009/07/book-review-code-complete-2nd-edition.html) in 2009 if you want to get a sense of its contents.
+Это одна из лучших книг, которые я когда-либо читал. Она в деталях повествует обо всех аспектах разработки программного обеспечения. Даже несмотря на то, что оригинал этой книги был написан в 2004, вы будете удивлены, когда увидите, насколько актуальны вещи, описанные в ней.  Если вы хотите знать серьезность написанных выше слов, я написал [ревью](http://www.continuousimprover.com/2009/07/book-review-code-complete-2nd-edition.html) на эту книгу в 2009.
 
 * [The Art of Agile Development](http://www.amazon.com/Art-Agile-Development-James-Shore/dp/0596527675) (James Shore)  
-Another great all-encompassing trip through the many practices preached by processes like Scrum and Extreme Programming. If you're looking for a quick introduction with a pragmatic touch, make sure you read James's book.
+Еще одно замечательное всеохватывающее путешествие через многие практики, проповедуемые такими методологиями, как Scrum и экстремальное программирование. Если вы хотите быстро ознакомиться с этими методологиями, обязательно прочитайте книгу Джеймса.
 
 * [Applying Domain-Driven Design and Patterns: With Examples in C# and .NET](http://www.amazon.com/Applying-Domain-Driven-Design-Patterns-Examples/dp/0321268202) (Jimmy Nilsson)  
-The book that started my interest for both Domain-Driven Design and Test-Driven Development. It's one of those books that I wished I had read a few years earlier. It would have spared me from many mistakes.
+Книга, с которой начался мой интерес к предметно-ориентированному проектированию (DDD) и разработке через тестирование (TDD). Это одна из тех книг, которую бы мне следовало прочитать на несколько лет раньше, чтобы избежать многих своих ошибок.
 
 * [Jeremy D. Miller's Blog](http://codebetter.com/blogs/jeremy.miller/)  
-Although he is not that active anymore, in the last couple of years he has written some excellent blog posts on Test-Driven Development, Design Patterns and design principles. I've learned a lot from his real-life and practical insights.
+Несмотря на то, что он больше не ведет этот блог, в последние пару лет им были написаны превосходные статьи о разработке через тестирование, паттернах и принципах проектирования. Я многому научился на его идеях и примерах, взятых из реальной жизни. 
 
 * [LINQ Framework Design Guidelines](http://blogs.msdn.com/b/mirceat/archive/2008/03/13/linq-framework-design-guidelines.aspx)  
-A set of rules and recommendations that you should adhere to when creating your own implementations of IQueryable.
+Набор правил и рекомендаций, которых вам следует придерживаться при создании своей собственной реализации интерфейса IQueryable.
 
 * [Best Practices for c# async/await](http://code.jonwagner.com/2012/09/06/best-practices-for-c-asyncawait/)  
-The rationale and source of several of the new guidelines in this document, written by [Jon Wagner](https://twitter.com/jonwagnerdotcom).
+Источник и обоснование нескольких новых рекомендаций, описанных в этом документе. Автором является [Jon Wagner](https://twitter.com/jonwagnerdotcom).

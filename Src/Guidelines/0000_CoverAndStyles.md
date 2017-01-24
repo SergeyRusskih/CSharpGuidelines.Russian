@@ -9,14 +9,14 @@ NOTE: Requires Markdown Extra. See http://michelf.ca/projects/php-markdown/extra
 </div>
 <br/>
 <div class="title">
-Coding Guidelines
+Рекомендации по написанию кода
 </div><br/>
 <div class="subTitle">
-for C# 3.0, 4.0 and 5.0
+на C# 3.0, 4.0 и 5.0
 </div>
 <br/>
 <div class="author">
-Dennis Doomen<br/>
-Version %semver%<br/>
+Денис Думен (Dennis Doomen)<br/>
+Версия %semver%<br/>
 %commitdate%
 </div>
