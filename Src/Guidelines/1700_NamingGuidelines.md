@@ -2,7 +2,7 @@
 NOTE: Requires Markdown Extra. See http://michelf.ca/projects/php-markdown/extra/
  --> 
 
-#6. Рекомендации по именованию
+# 6. Рекомендации по именованию
 
 ### <a name="av1701"></a> Используйте американский английский язык (AV1701) ![](images/1.png)
 

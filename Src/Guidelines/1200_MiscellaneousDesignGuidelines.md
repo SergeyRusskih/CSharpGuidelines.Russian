@@ -2,7 +2,7 @@
 NOTE: Requires Markdown Extra. See http://michelf.ca/projects/php-markdown/extra/
  --> 
 
-#4. Общие рекомендации по проектированию
+# 4. Общие рекомендации по проектированию
 
 ### <a name="av1200"></a> Генерируйте исключение вместо возвращения статусного сообщения (AV1200) ![](images/2.png)
 

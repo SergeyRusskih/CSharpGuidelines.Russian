@@ -2,7 +2,7 @@
 NOTE: Requires Markdown Extra. See http://michelf.ca/projects/php-markdown/extra/
  --> 
 
-#2. Рекомендации по проектированию классов
+# 2. Рекомендации по проектированию классов
 
 ### <a name="av1000"></a> Класс или интерфейс должны иметь единственное предназначение (AV1000) ![](images/1.png)
 

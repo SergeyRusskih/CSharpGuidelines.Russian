@@ -2,7 +2,7 @@
 NOTE: Requires Markdown Extra. See http://michelf.ca/projects/php-markdown/extra/
  --> 
 
-#9. Рекомендации по созданию документации
+# 9. Рекомендации по созданию документации
 
 ### <a name="av2301"></a> Пишите комментарии и документацию на американском английском (AV2301) ![](images/1.png)
 

@@ -2,7 +2,7 @@
 NOTE: Requires Markdown Extra. See http://michelf.ca/projects/php-markdown/extra/
  --> 
 
-#10. Рекомендации по оформлению
+# 10. Рекомендации по оформлению
 
 ### <a name="av2400"></a> Используйте общие правила оформления (AV2400) ![](images/1.png)
 
