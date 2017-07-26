@@ -32,14 +32,14 @@ NOTE: Requires Markdown Extra. See http://michelf.ca/projects/php-markdown/extra
 
 	event EventHandler Notify;
 	
-	void RaiseNotifyEvent(NotifyEventArgs args)  
-	{
-		EventHandler handlers = Notify;  
-		if (handlers != null)  
-		{  
-		    handlers(this, args); 
-		}
-	}
+    protected virtual void OnNotify(NotifyEventArgs args)  
+    {
+        EventHandler handlers = Notify;  
+        if (handlers != null)  
+        {  
+            handlers(this, args); 
+        }
+    }
 
 **Подсказка:** Вы можете сделать так, чтобы список делегатов не был совсем пустым. Просто объявите пустой делегат так, как показано ниже:
 
