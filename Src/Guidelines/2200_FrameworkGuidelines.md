@@ -32,22 +32,22 @@ NOTE: Requires Markdown Extra. See http://michelf.ca/projects/php-markdown/extra
 
 Лучше воспользоваться методом из пространства имен System.Linq:
 
-	var query = items.Where(i => i.Length > 0);
+	var query = items.Where(item => item.Length > 0);
 
-К тому же LINQ-запросы должны быть разбиты на несколько строк для читаемости. Таким образом, второе выражение выглядит более читаемо.
+К тому же LINQ-запросы должны быть разбиты на несколько строк для читаемости. Таким образом, второе выражение выглядит более компактно.
 
-### <a name="av2221"></a> Используйте лямбда-выражения вместо делегатов (AV2221) ![](images/2.png)
+### <a name="av2221"></a> Используйте лямбда-выражения вместо анонимных функций (AV2221) ![](images/2.png)
 
-Лямбда-выражения служат более красивой альтернативой анонимным методам. Таким образом, вместо:
+Лямбда-выражения служат более красивой альтернативой анонимным функциям. Таким образом, вместо:
 
-	Customer customer = Array.Find(customers, delegate(Customer c)
+	Customer customer = Array.Find(customers, delegate(Customer customer)
 	{
-		return c.Name == "Tom";
+		return customer.Name == "Tom";
 	});
 
 используйте лямбда-выражение:
 
-	Customer customer = Array.Find(customers, c => c.Name == "Tom");
+	Customer customer = Array.Find(customers, customer => customer.Name == "Tom");
 
 или даже лучше это: 
 
@@ -69,10 +69,10 @@ NOTE: Requires Markdown Extra. See http://michelf.ca/projects/php-markdown/extra
 
 объявляйте метод следующим образом: 
 
-	public async Task GetDataAsync()
+	public async Task<Data> GetDataAsync()
 	{
-	  var result = await MyWebService.FetchDataAsync();
-	  return new Data (result);
+	  string result = await MyWebService.FetchDataAsync();
+	  return new Data(result);
 	}
 
 **Подсказка:** Если даже вам необходим .NET Framework 4.0 вы все равно можете использовать `async` и `await`. Просто установите [Async Targeting Pack](http://www.microsoft.com/en-us/download/details.aspx?id=29576).

@@ -27,10 +27,12 @@ NOTE: Requires Markdown Extra. See http://michelf.ca/projects/php-markdown/extra
 **Исключение:** Если вы решите связать классы из различных несвязанных пространств имен в одну сборку, добавьте суффикс `Core` к ее названию. Однако не используйте этот суффикс в названиях пространств имен. Например: `AvivaSolutions.Consulting.Core.dll`.
 
 ### <a name="av1506"></a> Называйте файлы с исходным кодом в соответствии с тем типом данных, который он содержит (AV1506) ![](images/3.png)
-Используйте нотацию паскаль для именования файлов и не используйте подчеркивания.
+Используйте нотацию паскаль для именования файлов и не используйте подчеркивания. Не включайте в название обобщенные параметры и их количество.
 
 ### <a name="av1507"></a> Ограничивайте содержимое файла с исходным кодом одним типом данных  (AV1507) ![](images/3.png)
-**Исключение:** Вложенные типы, по понятным причинам, должны быть частью того же самого файла.
+**Исключение:** Вложенные типы должны быть частью того же самого файла.
+
+**Исключение:** Типы, которые отличаются друг от друга только количеством обобщенных параметров, должны находиться в одном и том же файле.
 
 ### <a name="av1508"></a> Наименование файла с исходным кодом, который содержит частичный тип данных, должно отражать назначение этой части (AV1508) ![](images/3.png)
 Когда используются частичные типы и идет разделение частей на файлы, имя каждого файла должно быть логически разделено на две части. Первая часть – название типа. Вторая – роль, которую данный фрагмент играет в типе. Например:
@@ -46,13 +48,13 @@ NOTE: Requires Markdown Extra. See http://michelf.ca/projects/php-markdown/extra
 ### <a name="av1510"></a> Используйте `using` вместо указания полной ссылки на тип из другого пространства имен (AV1510) ![](images/3.png)
 Не используйте полную ссылку на тип из другого пространства имен в целях предотвращения конфликтов именования. Например, не делайте так:
 
-	var list = new System.Collections.Generic.List();
+	var list = new System.Collections.Generic.List<string>();
 
 Лучше сделать так:
 
 	using System.Collections.Generic;
 	
-	var list = new List();
+	var list = new List<string>();
 
 Если вам необходимо избежать конфликтов именования, используйте директиву `using` для создания псевдонима пространства имен или типа:
 
@@ -64,7 +66,8 @@ NOTE: Requires Markdown Extra. See http://michelf.ca/projects/php-markdown/extra
 	public class Whatever  
 	{
 		public static readonly Color PapayaWhip = new Color(0xFFEFD5);
-		public const int MaxNumberOfWheels = 18;  
+		public const int MaxNumberOfWheels = 18;
+		public const byte ReadCreateOverwriteMask = 0b0010_1100; 
 	}
 
 Строки, предназначенные для логирования или трассировки, являются исключением из этого правила. Литеральные значения допускается использовать только тогда, когда их смысл ясен из контекста и их не планируется изменять. Например:
@@ -85,7 +88,7 @@ NOTE: Requires Markdown Extra. See http://michelf.ca/projects/php-markdown/extra
 ### <a name="av1520"></a> Используйте `var` только тогда, когда тип переменной очевиден (AV1520) ![](images/1.png)
 Используйте `var` только в том случае, если переменной присваивается результат LINQ-запроса или если тип переменной очевиден и использование var повысит читаемость кода. Например, так делать не стоит:
 
-	var i = 3;									// Что за тип? int? uint? float?
+	var item = 3;						// Что за тип? int? uint? float?
 	var myfoo = MyFactoryMethod.Create("arg");	// Не понятно, какой тип имеет	
 												// класс или интерфейс. Кроме того,
 												// тяжело изменять код, который работает 
@@ -94,7 +97,7 @@ NOTE: Requires Markdown Extra. See http://michelf.ca/projects/php-markdown/extra
 
 Вместо этого используйте var как в примерах ниже:
 
-	var q = from order in orders where order.Items > 10 and order.TotalValue > 1000;
+	var query = from order in orders where order.Items > 10 and order.TotalValue > 1000;
 	var repository = new RepositoryFactory.Get();	
 	var list = new ReadOnlyCollection();
 
@@ -107,6 +110,16 @@ NOTE: Requires Markdown Extra. See http://michelf.ca/projects/php-markdown/extra
 Никогда не делайте так:
 
 	var result = someField = GetSomeMethod();
+	
+**Исключение:** Несколько выражений присваивания в одной строке разрешены при использовании `out` переменных, is-паттерна или преобразования в tuple. Например:
+
+	bool success = int.TryParse(text, out int result);
+
+	if ((items[0] is string text) || (items[1] is Action action))
+	{
+	}
+
+	(int a, int b) = M();
 
 ### <a name="av1523"></a> Предпочитайте инициализаторы объектов и коллекций раздельной установке свойств и раздельному добавлению новых объектов в коллекцию (AV1523) ![](images/2.png)
 Вместо такой конструкции:
@@ -114,6 +127,14 @@ NOTE: Requires Markdown Extra. See http://michelf.ca/projects/php-markdown/extra
 	var startInfo = new ProcessStartInfo("myapp.exe");	
 	startInfo.StandardOutput = Console.Output;
 	startInfo.UseShellExecute = true;
+	
+	var countries = new List();
+	countries.Add("Netherlands");
+	countries.Add("United States");
+
+	var countryLookupTable = new Dictionary<string, string>();
+	countryLookupTable.Add("NL", "Netherlands");
+	countryLookupTable.Add("US", "United States");
 
 Используйте [инициализатор объекта](http://msdn.microsoft.com/en-us/library/bb384062.aspx):
 
@@ -123,15 +144,13 @@ NOTE: Requires Markdown Extra. See http://michelf.ca/projects/php-markdown/extra
 		UseShellExecute = true  
 	};
 
-Вместо создания коллекции — таким образом:
-
-	var countries = new List();
-	countries.Add("Netherlands");
-	countries.Add("United States");
-
-Используйте инициализатор коллекции или [словаря](http://msdn.microsoft.com/en-us/library/bb531208.aspx):
-
 	var countries = new List { "Netherlands", "United States" };
+	
+	var countryLookupTable = new Dictionary<string, string>
+	{
+		["NL"] = "Netherlands",
+		["US"] = "United States"
+	};
 
 ### <a name="av1525"></a> Не производите явного сравнения с `true` или `false` (AV1525) ![](images/1.png)
 
@@ -147,7 +166,7 @@ NOTE: Requires Markdown Extra. See http://michelf.ca/projects/php-markdown/extra
 
 	for (int index = 0; index < 10; ++index)  
 	{  
-		if (_some condition_)
+		if (someCondition)
 		{
 			index = 11; // Неправильно! Вместо этого используйте ‘break’ или ‘continue’. 
 		}
@@ -156,15 +175,15 @@ NOTE: Requires Markdown Extra. See http://michelf.ca/projects/php-markdown/extra
 ### <a name="av1532"></a> Избегайте вложенных циклов (AV1532) ![](images/2.png)
 Методы, содержащие вложенные циклы, более сложны для понимания, чем те, которые содержат только один цикл. По факту, в большинстве случаев циклы могут быть заменены гораздо меньшим по размеру LINQ-запросом, который использует ключевое слово `from` два раза и более для объединения данных.
 
-### <a name="av1535"></a> Всегда используйте конструкции `if`, `else`, `while`, `for`, `foreach` и `case` с фигурными скобками (AV1535) ![](images/2.png)
+### <a name="av1535"></a> Всегда используйте конструкции `if`, `else`, `do`, `while`, `for`, `foreach` и `case` с фигурными скобками (AV1535) ![](images/2.png)
 Пожалуйста, обратите внимание, что это также поможет избежать возможной путаницы с конструкциями вроде этой:
 
-	if (b1) if (b2) Foo(); else Bar(); // к какому ‘if’ относится ‘else’?
+	if (isActive) if (isVisible) Foo(); else Bar(); // к какому ‘if’ относится ‘else’?
 	
 	// Лучше сделать так:   
-	if (b1)  
+	if (isActive)  
 	{  
-		if (b2)  
+		if (isVisible)  
 		{  
 			Foo();  
 		}  
@@ -227,39 +246,73 @@ NOTE: Requires Markdown Extra. See http://michelf.ca/projects/php-markdown/extra
 ### <a name="av1545"></a> Не используйте блок `if-else` вместо простого (условного) присваивания (AV1545) ![](images/2.png)
 Выражайте свои намерения прямо. Например, вместо этого:
 
-	bool pos;
+	bool isPositive;
 	
-	if (val > 0)  
+	if (value > 0)  
 	{  
-		pos = true;  
+		isPositive = true;  
 	}  
 	else  
 	{  
-		pos = false;  
+		isPositive = false;  
 	}
 
 Делайте так:
 
-	bool pos = (val > 0); // инициализация
+	bool isPositive = (value > 0); 
 
 Вместо:
 
-	string result;
+	string classification;
 	
-	if (someString != null)
+	if (value> 0)
 	{  
-		result = someString;  
+		classification = "positive";  
 	}
 	else
 	{
-		result = "Unavailable";
+		classification = "negative";
 	}
 
-	return result;
+	return classification;
 
 Пишите:
 
-	return someString ?? "Unavailable";
+	return (value > 0) ? "positive" : "negative";
+	
+Вместо:
+
+	int result;
+	
+	if (offset == null)
+	{
+		result = -1;
+	}
+	else
+	{
+		result = offset.Value;
+	}
+	
+	return result;
+	
+Пишите:
+	
+	return offset ?? -1;
+	
+Или вместо:
+
+	if (employee.Manager != null)
+	{
+		return employee.Manager.Name;
+	}
+	else
+	{
+		return null;
+	}
+	
+Пишите:
+	
+	return employee.Manager?.Name;
 
 ### <a name="av1547"></a> Инкапсулируйте сложное выражение в методе или свойстве (AV1547) ![](images/1.png)
 Рассмотрим следующий пример:
@@ -311,7 +364,7 @@ NOTE: Requires Markdown Extra. See http://michelf.ca/projects/php-markdown/extra
 
 Класс `MyString` обеспечивает три перегрузки метода `IndexOf`, при этом две их них просто вызывают другую с большим количеством параметров. Заметьте, что это правило применимо к конструкторам класса. Реализуйте наиболее перегруженный конструктор и вызывайте его из других перегрузок, используя оператор `this()`. Также следует отметить, что параметры с одними и теми же именами должны следовать в одном и том же порядке во всех перегрузках.
 
-**Важно:** Если вы хотите, чтобы поведение классов можно было менять с помощью переопределения данных методов, то объявите наиболее перегруженный метод как `protected virtual`, который вызывается всеми перегрузками.
+**Важно:** Если вы хотите, чтобы поведение классов можно было менять с помощью переопределения данных методов, то объявите наиболее перегруженный метод как не приватный виртуальный, который вызывается всеми перегрузками.
 
 ### <a name="av1553"></a> Используйте необязательные аргументы только для того, чтобы заменять перегрузки (AV1553) ![](images/1.png)
 Единственная допустимая причина для использования необязательных аргументов C# 4.0 – это замена примера из правила AV1551 одиночным методом наподобие этого:
@@ -341,6 +394,10 @@ NOTE: Requires Markdown Extra. See http://michelf.ca/projects/php-markdown/extra
 ### <a name="av1562"></a> Не используйте `ref` и `out` в параметрах (AV1562) ![](images/1.png)
 Они делают код менее понятным и создают предпосылки для ошибок. Вместо этого возвращайте составные объекты в качестве результата выполнения функции.
 
+**Исключение:** Разрешено объявление и использование методов, которые реализуют [TryParse](https://docs.microsoft.com/en-us/dotnet/api/system.int32.tryparse). Например:
+
+	bool success = int.TryParse(text, out int number);
+
 ### <a name="av1564"></a>Не создавайте методы, которые принимают в качестве параметра логическое значение (AV1564) ![](images/2.png)
 Посмотрите на следующий метод:
 
@@ -356,8 +413,20 @@ NOTE: Requires Markdown Extra. See http://michelf.ca/projects/php-markdown/extra
 ### <a name="av1568"></a> Не используйте параметры в качестве временных переменных (AV1568) ![](images/3.png)
 Никогда не используйте параметр в качестве внутренней переменной. Даже если тип параметра может совпадать с тем типом, который вам требуется, то название, как правило, не будет отражать цели временной переменной.
 
-### <a name="av1570"></a> Всегда проверяйте результат, возвращаемый оператором `as` (AV1570) ![](images/1.png)
+### <a name="av1570"></a> Отдавайте предпочтение использованию `is` вместо `as` (AV1570) ![](images/1.png)
 Если вы используйте оператор `as` чтобы привести объект к определенному интерфейсу, то всегда проверяйте возвращаемый им результат на `null`. Невыполнение этого требования может привести к исключению `NullReferenceException` на гораздо поздней стадии выполнении программы, если объект не реализует требуемый интерфейс.
+Паттерн матчинг помогает предотвратить это и улучшить читаемость. Например, вместо:
+
+	var remoteUser = user as RemoteUser;
+	if (remoteUser != null)
+	{
+	}
+
+Пишите:
+
+	if (user is RemoteUser remoteUser)
+	{
+	}
 
 ### <a name="av1575"></a> Не оставляйте закомментированные участки кода (AV1575) ![](images/1.png)
 Никогда не отправляйте в репозиторий закомментированный код. Вместо этого используйте систему трекинга задач, чтобы следить за тем, какая работа должна быть сделана. Никто впоследствии не догадается, для чего предназначен тот или иной блок закомментированного кода. Он был временно закомментирован для тестирования? Он был скопирован в качестве примера? Должен ли я удалить его?

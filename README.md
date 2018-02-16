@@ -1,11 +1,11 @@
-Рекомендации по написанию кода на C# 3.0, 4.0 и 5.0
+Рекомендации по написанию кода на C# 5.0, 6.0 и 7.0
 ================
 
 [![Join the chat at https://gitter.im/dennisdoomen/csharpguidelines](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dennisdoomen/csharpguidelines?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build status](https://ci.appveyor.com/api/projects/status/abdiejvl9jp9h60l?svg=true)](https://ci.appveyor.com/project/dennisdoomen/csharpguidelines)
 
 ## От переводчика
-Этот документ представляет из себя перевод [Coding Guidelines for C# 3.0, 4.0 and 5.0](https://github.com/dennisdoomen/CSharpGuidelines) от [Aviva Solutions](http://www.avivasolutions.nl).
+Этот документ представляет из себя перевод [Coding Guidelines for C# 5.0, 6.0 и 7.0](https://github.com/dennisdoomen/CSharpGuidelines) от [Aviva Solutions](http://www.avivasolutions.nl).
 
 ## Что это
 Целью создания этого списка правил является попытка установить стандарты написания кода на C#, которые были бы удобными и практичными одновременно. Само собой, мы практикуем то, что создали. Эти правила являются одним из тех стандартов, которые лежат в основе нашей ежедневной работы в [Aviva Solutions](http://www.avivasolutions.nl). Не все эти правила имеют четкое обоснование. Некоторые из них просто приняты у нас в качестве стандартов. В конце-концов, не столько важен сам выбор, а важно то, как строго вы следуйте выбранным правилам.
