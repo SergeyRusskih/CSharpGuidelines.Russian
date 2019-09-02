@@ -7,107 +7,105 @@ sidebar:
   nav: "sidebar"
 ---
 
-### <a name="av1701"></a> Use US English (AV1701) ![](/assets/images/1.png)
+### <a name="av1701"></a> Используйте американский английский язык (AV1701) ![](/assets/images/1.png)
 
-All identifiers (such as types, type members, parameters and variables) should be named using words from the American English language.
+Все члены классов, параметры и переменные должны иметь название с использованием слов из американского английского языка.
 
-- Choose easily readable, preferably grammatically correct names. For example, `HorizontalAlignment` is more readable than `AlignmentHorizontal`.
-- Favor readability over brevity. The property name `CanScrollHorizontally` is better than `ScrollableX` (an obscure reference to the X-axis).
-- Avoid using names that conflict with keywords of widely used programming languages.
+- Выбирайте легкое, читаемое, предпочтительно грамматически правильное имя. Например, `HorizontalAlignment` более читаемое наименование, чем `AlignmentHorizontal`.
+- Предпочитайте читаемость краткости. Имя свойства `CanScrollHorizontally` лучше, чем `ScrollableX` (отсылка к оси Х ни о чем не говорит).
+- Избегайте использования имен, которые конфликтуют с ключевыми словами языка программирования.
 
-### <a name="av1702"></a> Use proper casing for language elements (AV1702) ![](/assets/images/1.png) 
+### <a name="av1702"></a> Для каждого элемента языка используйте соответствующую нотацию (AV1702) ![](/assets/images/1.png) 
 
-| Language element | Casing| Example |
+| Элемент языка | Нотация | Пример |
 |:--------------------|:----------|:-----------|
-| Namespace | Pascal | `System.Drawing` |
-| Type parameter | Pascal | `TView` |
-| Interface | Pascal | `IBusinessService`
-| Class, struct | Pascal | `AppDomain`
-| Enum | Pascal | `ErrorLevel` |
-| Enum member | Pascal | `FatalError` |
-| Resource key | Pascal | `SaveButtonTooltipText` |
-| Constant field | Pascal | `MaximumItems` |
-| Private static readonly field | Pascal | `RedValue` |
-| Private field | Camel | `listItem` |
-| Non-private field | Pascal | `MainPanel` |
-| Property | Pascal | `BackColor` |
-| Event | Pascal | `Click` |
-| Method | Pascal | `ToString` |
-| Local function | Pascal | `FormatText` |
-| Parameter | Camel | `typeName` |
-| Tuple element names | Pascal | `(string First, string Last) name = ("John", "Doe");` <br/>`var name = (First: "John", Last: "Doe");` <br/>`(string First, string Last) GetName() => ("John", "Doe");` |
-| Variables declared using tuple syntax | Camel | `(string first, string last) = ("John", "Doe");` <br/>`var (first, last) = ("John", "Doe");` <br/> |
-| Local variable | Camel | `listOfValues` |
+| Пространство имен | Паскаль | `System.Drawing` |
+| Параметр типа | Паскаль | `TView` |
+| Интерфейс | Паскаль | `IBusinessService`
+| Класс, структура | Паскаль | `AppDomain`
+| Перечисление | Паскаль | `ErrorLevel` |
+| Объект перечисления | Паскаль | `FatalError` |
+| Ключ ресурса | Паскаль | `SaveButtonTooltipText` |
+| Константа | Паскаль | `MaximumItems` |
+| Приватное статическое ридонли поле | Паскаль | `RedValue` |
+| Приватное поле | Верблюжья | `listItem` |
+| Публичное поле | Паскаль | `MainPanel` |
+| Свойство | Паскаль | `BackColor` |
+| Событие | Паскаль | `Click` |
+| Метод | Паскаль | `ToString` |
+| Локальная функция | Паскаль | `FormatText` |
+| Параметр | Верблюжья | `typeName` |
+| Название элемнтов Tuple | Паскаль | `(string First, string Last) name = ("John", "Doe");` <br/>`var name = (First: "John", Last: "Doe");` <br/>`(string First, string Last) GetName() => ("John", "Doe");` |
+| Переменные, объявленные с помощью Tuple синтаксиса | Верблюжья | `(string first, string last) = ("John", "Doe");` <br/>`var (first, last) = ("John", "Doe");` <br/> |
+| Локальные переменные | Верблюжья | `listOfValues` |
 
-**Note:** in case of ambiguity, the rule higher in the table wins.
+**Примечание:** Чем выше правило в таблице, тем больший приоритет оно имеет.
 
-### <a name="av1704"></a> Don't include numbers in variables, parameters and type members (AV1704) ![](/assets/images/3.png)
-In most cases they are a lazy excuse for not defining a clear and intention-revealing name.
+### <a name="av1704"></a> Не включайте числа в наименования переменных, параметров и типов (AV1704) ![](/assets/images/3.png)
+В большинстве случаев только лень может послужить причиной отсутствия ясного и говорящего самого за себя имени. 
 
-### <a name="av1705"></a> Don't prefix fields (AV1705) ![](/assets/images/1.png)
+### <a name="av1705"></a> Не используйте префиксы в названиях полей (AV1705) ![](/assets/images/1.png)
+Например, не используйте `g_` или `s_` чтобы различить между собой статические и нестатические поля. Обычно, если в методе трудно отличить локальные переменные от полей класса, то данный метод слишком громоздок. Вот примеры неправильных наименований: `_currentUser`, `mUserName`, `m_loginTime`.
 
-For example, don't use `g_` or `s_` to distinguish static from non-static fields. A method in which it is difficult to distinguish local variables from member fields is generally too big. Examples of incorrect identifier names are: `_currentUser`, `mUserName`, `m_loginTime`.
+### <a name="av1706"></a> Не используйте аббревиатуры (AV1706) ![](/assets/images/2.png)
+Например, используйте `OnButtonClick` вместо `OnBtnClick`. Избегайте использования одиночных символов в названиях переменных, таких как `i` и `q`. Вместо этого используйте полные слова, такие как `index` и `query`.
 
-### <a name="av1706"></a> Don't use abbreviations (AV1706) ![](/assets/images/2.png)
-For example, use `ButtonOnClick` rather than `BtnOnClick`. Avoid single character variable names, such as `i` or `q`. Use `index` or `query` instead.
+**Исключение:** Можно использовать акронимы и аббревиатуры, которые широко распространены в вашем домене. Например, используйте акроним `UI` вместо `UserInterface` и аббревиатуру `Id` вместо `Identity`.
 
-**Exceptions:** Use well-known acronyms and abbreviations that are widely accepted or well-known in your work domain. For instance, use acronym `UI` instead of `UserInterface` and abbreviation `Id` instead of `Identity`.
+### <a name="av1707"></a> Называйте члены класса, параметры и переменные в соответствии с их назначением, а не типом (AV1707) ![](/assets/images/2.png)
+- Используйте наименование, которое указывает на функцию, которую выполняет член класса. Например, название `GetLength` лучше чем `GetInt`.
+- Не используйте такие термины, как `Enum`, `Class` или `Struct` в именах.
+- Переменные, ссылающиеся на коллекции, должны иметь название во множественном числе.
 
-### <a name="av1707"></a> Name members, parameters and variables according to their meaning and not their type (AV1707) ![](/assets/images/2.png)
-- Use functional names. For example, `GetLength` is a better name than `GetInt`.
-- Don't use terms like `Enum`, `Class` or `Struct` in a name.
-- Identifiers that refer to a collection type should have plural names.
+### <a name="av1708"></a> Именуйте типы, используя словосочетания из существительных или прилагательных (AV1708) ![](/assets/images/2.png)
+Например, имя IComponent использует описательное существительное, ICustomAttributeProvider использует сочетание существительных, IPersistable использует прилагательное.
+Плохие примеры: `SearchExamination` (страница поиска экзаменов), `Common` (не оканчивается на существительное, не объясняет назначение), `SiteSecurity` (несмотря на то, что с технической точки зрения имя выглядит хорошо, оно ничего не говорит о назначении).
 
-### <a name="av1708"></a> Name types using nouns, noun phrases or adjective phrases (AV1708) ![](/assets/images/2.png)
-For example, the name IComponent uses a descriptive noun, ICustomAttributeProvider uses a noun phrase and IPersistable uses an adjective.
-Bad examples include `SearchExamination` (a page to search for examinations), `Common` (does not end with a noun, and does not explain its purpose) and `SiteSecurity` (although the name is technically okay, it does not say anything about its purpose).
+Не используйте термины `Utility` или `Helper` в названиях классов. Классы с такими именами обычно статические и спроектированны без учета принципов объектно-ориентированного программирования (смотрите также [AV1008](/member-design-guidelines#av1008)).
 
-Don't include terms like `Utility` or `Helper` in classes. Classes with names like that are usually static classes and are introduced without considering object-oriented principles (see also [AV1008](/member-design-guidelines#av1008)).
+### <a name="av1709"></a> При именовании параметров обобщенных типов используйте описательные имена  (AV1709) ![](/assets/images/2.png)
+- Всегда добавляйте приставку `Т` к описательным именам параметров типа.
+- Всегда используйте описательные имена, если только имя, состоящее из одной буквы, не является полностью понятным без пояснений. В этом случае используйте букву `Т` в качестве имени параметра типа.
+- Рекомендуется в имени параметра типа указывать ограничения, накладываемые на параметр типа. Например, параметр, предназначенный только для `ISession`, может быть назван `TSession`.
 
-### <a name="av1709"></a> Name generic type parameters with descriptive names (AV1709) ![](/assets/images/2.png)
-- Always prefix type parameter names with the letter `T`.
-- Always use a descriptive name unless a single-letter name is completely self-explanatory and a longer name would not add value. Use the single letter `T` as the type parameter in that case.
-- Consider indicating constraints placed on a type parameter in the name of the parameter. For example, a parameter constrained to `ISession` may be called `TSession`.
-
-### <a name="av1710"></a> Don't repeat the name of a class or enumeration in its members (AV1710) ![](/assets/images/1.png)
+### <a name="av1710"></a> Не повторяйте имя класса или перечисления в названиях их членов (AV1710) ![](/assets/images/1.png)
 
 	class Employee
 	{
-		// Wrong!
+		// Неправильно!
 		static GetEmployee() {...}
 		DeleteEmployee() {...}
 		
-		// Right
+		// Правильно
 		static Get() {...}
 		Delete() {...}
 		
-		// Also correct.
+		// Тоже верно.
 		AddNewJob() {...}
 		RegisterForMeeting() {...}
 	}
 
-### <a name="av1711"></a> Name members similarly to members of related .NET Framework classes (AV1711) ![](/assets/images/3.png)
+### <a name="av1711"></a> Давайте элементам такие названия, которые схожи с элементами связанных с ними классов .NET Framework (AV1711) ![](/assets/images/3.png)
+.NET разработчики уже привыкли к паттернам именования, которые используются в .NET Framework. Таким образом, следование этим паттернам поможет им быстрее разобраться в вашем коде. Например, если вы определяете класс, который реализует коллекцию, то назовите методы удаления элемента, его добавления и получения количества элементов такими именами, как `Add`, `Remove` и `Count` вместо `AddItem`, `Delete`, или `NumberOfItems`.
 
-.NET developers are already accustomed to the naming patterns the framework uses, so following this same pattern helps them find their way in your classes as well. For instance, if you define a class that behaves like a collection, provide members like `Add`, `Remove` and `Count` instead of `AddItem`, `Delete` or `NumberOfItems`.
-
-### <a name="av1712"></a> Avoid short names or names that can be mistaken for other names (AV1712) ![](/assets/images/1.png)
-Although technically correct, statements like the following can be confusing:
+### <a name="av1712"></a> Избегайте коротких имен или имен, которые можно спутать с другими наименованиями (AV1712) ![](/assets/images/1.png)
+Несмотря на то, что с технической точки зрения следующее выражение может выглядеть корректно, оно легко может ввести в заблуждение того, кто с ним столкнется :
 
 	bool b001 = (lo == l0) ? (I1 == 11) : (lOl != 101);
 
-### <a name="av1715"></a> Properly name properties (AV1715) ![](/assets/images/2.png)
-- Name properties with nouns, noun phrases, or occasionally adjective phrases. 
-- Name boolean properties with an affirmative phrase. E.g. `CanSeek` instead of `CannotSeek`.
-- Consider prefixing boolean properties with `Is`, `Has`, `Can`, `Allows`, or `Supports`.
-- Consider giving a property the same name as its type. When you have a property that is strongly typed to an enumeration, the name of the property can be the same as the name of the enumeration. For example, if you have an enumeration named `CacheLevel`, a property that returns one of its values can also be named `CacheLevel`.
+### <a name="av1715"></a> Не ленитесь давать подходящие названия свойствам (AV1715) ![](/assets/images/2.png)
+- Именуйте свойства с использованием существительных, словосочетаний с существительными или, в крайнем случае, с использованием словосочетаний с прилагательными. 
+- Называйте свойство, которое имеет логический тип, используя утвердительные фразы. Например, `CanSeek` вместо `CannotSeek`.
+- В наименованиях свойств, которые имеют логический тип, попробуйте использовать приставки `Is`, `Has`, `Can`, `Allows`, или `Supports`.
+- Попробуйте дать свойству такое же название, как и у его типа. Когда вы создали свойство, которое имеет тип перечисления, название свойства может быть таким же, как название типа перечисления. Например, если у вас есть перечисление `CacheLevel`, то свойство, возвращающее одно из его значений, также должно иметь название `CacheLevel`.
 
-### <a name="av1720"></a> Name methods and local functions using verbs or verb-object pairs (AV1720) ![](/assets/images/2.png)
-Name a method or local function using a verb like `Show` or a verb-object pair such as `ShowDialog`. A good name should give a hint on the *what* of a member, and if possible, the *why*.
+### <a name="av1720"></a> Именуйте методы, используя связку глагол-объект (AV1720) ![](/assets/images/2.png)
+Например, название метода или локальной функции `Show` или связка глагол-объект `ShowDialog`. Хорошее имя должно давать подсказку *что* происходит при вызови и, если возможно, *почему*.
 
-Also, don't include `And` in the name of a method or local function. That implies that it is doing more than one thing, which violates the Single Responsibility Principle explained in [AV1115](/member-design-guidelines#av1115).
+Также не используйте слово `And` в названии метода или локальной функции. Это говорит о том, что метод делает более чем одну вещь, что является нарушением принципа единой ответственности [AV1115](/member-design-guidelines#av1115).
 
-### <a name="av1725"></a> Name namespaces using names, layers, verbs and features (AV1725) ![](/assets/images/3.png)
-For instance, the following namespaces are good examples of that guideline.
+### <a name="av1725"></a> В названиях пространств имен используйте имена собственные, названия модулей (слоев), глаголы и слова, описывающие особенности данного пространства имен (AV1725) ![](/assets/images/3.png)
+Например, наименования следующих пространств имен могут служить хорошим примером:
 
 	AvivaSolutions.Commerce.Web
 	NHibernate.Extensibility
@@ -116,32 +114,32 @@ For instance, the following namespaces are good examples of that guideline.
 	FluentAssertion.Primitives
 	CaliburnMicro.Extensions
 
-**Note:** Never allow namespaces to contain the name of a type, but a noun in its plural form (e.g. `Collections`) is usually OK.
+**Примечание:** Никогда не допускайте, чтобы в названиях пространств имен содержались названия типов, но если это существительное в его множественной форме, например `Collections`, то это обычно допустимо.
 
-### <a name="av1735"></a> Use a verb or verb phrase to name an event (AV1735) ![](/assets/images/2.png)
-Name events with a verb or a verb phrase. For example: `Click`, `Deleted`, `Closing`, `Minimizing`, and `Arriving`. For example, the declaration of the `Search` event may look like this:
+### <a name="av1735"></a> Используйте глагол или словосочетание с глаголом в названии события (AV1735) ![](/assets/images/2.png)
+Именуйте событие глаголом или словосочетанием с глаголом. Например: `Click`, `Deleted`, `Closing`, `Minimizing`, `Arriving`. Например, объявление события `Search` может выглядеть следующим образом:
 
 	public event EventHandler<SearchArgs> Search;
 
-### <a name="av1737"></a> Use `-ing` and `-ed` to express pre-events and post-events (AV1737) ![](/assets/images/3.png)
-For example, a close event that is raised before a window is closed would be called `Closing`, and one that is raised after the window is closed would be called `Closed`. Don't use `Before` or `After` prefixes or suffixes to indicate pre and post events.
+### <a name="av1737"></a> Используйте `-ing` и `-ed` для событий, которые должны случиться перед и после какого-либо другого события (AV1737) ![](/assets/images/3.png)
+Например, событие, которое предшествует закрытию окна, должно называться `Closing`, а событие, которое возникает после его закрытия, — `Closed`. Не используйте приставки `Before` и `After` или какие-либо суффиксы для идентификации таких событий.
 
-Suppose you want to define events related to the deletion of an object. Avoid defining the `Deleting` and `Deleted` events as `BeginDelete` and `EndDelete`. Define those events as follows:
+Предположим, вы хотите определить события, которые связаны с процессом удаления некоторого объекта. Дайте событиям имена `Deleting` и `Deleted` и избегайте таких наименований, как `BeginDelete` и `EndDelete`. Именуйте события так, как написано ниже:
 
-- `Deleting`: Occurs just before the object is getting deleted
-- `Delete`: Occurs when the object needs to be deleted by the event handler.
-- `Deleted`: Occurs when the object is already deleted.
+- `Deleting`: Произойдет непосредственно перед удалением объекта.
+- `Delete`: Произойдет, когда объект должен быть удален обработчиком события.
+- `Deleted`: Произойдет, когда объект будет уже удален.
 
-### <a name="av1738"></a> Prefix an event handler with "On" (AV1738) ![](/assets/images/3.png)
-It is good practice to prefix the method that handles an event with "On". For example, a method that handles its own `Closing` event should be named `OnClosing`. And a method that handles the `Click` event of its `okButton` field should be named `OkButtonOnClick`.
+### <a name="av1738"></a> Используйте приставку On в названии обработчика события (AV1738) ![](/assets/images/3.png)
+Хорошей практикой является добавлять приставку `On` к названию метода, который обрабатывает событие. Например, если метод обрабатывает событие `Closing`, то название должно быть `OnClosing`.
 
-### <a name="av1739"></a> Use an underscore for irrelevant lambda parameters (AV1739) ![](/assets/images/3.png)
-If you use a lambda expression (for instance, to subscribe to an event) and the actual parameters of the event are irrelevant, use the following convention to make that explicit:
+### <a name="av1739"></a> Используйте символ подчеркивание для параметров лямбда-выражений, которые не имеют значения (AV1739) ![](/assets/images/3.png)
+Если вы используете лямбда-выражение, например, чтобы подписаться на событие, и текущие параметры события не имеют значения, используйте следующее условное обозначение, чтобы указать это более конкретно.
 
 	button.Click += (_, __) => HandleClick();
 
-### <a name="av1745"></a> Group extension methods in a class suffixed with Extensions (AV1745) ![](/assets/images/3.png)
-If the name of an extension method conflicts with another member or extension method, you must prefix the call with the class name. Having them in a dedicated class with the `Extensions` suffix improves readability.
+### <a name="av1745"></a> Именуйте группы методов расширений в классе с использованием суффикса "Extentions" (AV1745) ![](/assets/images/3.png)
+Если название метода расширения конфликтует с другими элементом или методом расширения, вы должны добавить префикс в виде названия класса к вызову. Их добавление в связанный класс с суффиксом `Extensions` улучшит читаемость.
 
-### <a name="av1755"></a> Postfix asynchronous methods with `Async` or `TaskAsync` (AV1755) ![](/assets/images/2.png)
-The general convention for methods and local functions that return `Task` or `Task<TResult>` is to postfix them with `Async`. But if such a method already exists, use `TaskAsync` instead.
+### <a name="av1755"></a> Добавляйте суффиксы `Async` или `TaskAsync` к названиям асинхронных методов (AV1755) ![](/assets/images/2.png)
+Общая рекомендация для методов, которые возвращают `Task`, — это добавлять к ним суффикс `Async`. Однако если метод с таким названием уже существует, используйте вместо этого суффикс `TaskAsync`.
