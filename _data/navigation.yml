@@ -1,0 +1,53 @@
+# main links
+main:
+  - title: "The Continuous Improver"
+    url: https://www.continuousimprover.com
+  - title: "Aviva Solutions"
+    url: https://www.avivasolutions.nl
+
+sidebar:
+  - title: Введение
+    url: /
+    children:
+      - title: Что это?
+        url: /#11-what-is-this
+      - title: Зачем мне использовать этот документ?
+        url: /#12-why-would-you-use-this-document
+      - title: Базовые принципы
+        url: /#13-basic-principles
+      - title: Как мне начать?
+        url: /#14-how-do-you-get-started
+      - title: Почему вы создали это?
+        url: /#15-why-did-we-create-it
+      - title: Могу ли я создать свою собственную версию?
+        url: /#18-can-i-create-my-own-version
+
+  - title: Рекомендации
+    children:
+      - title: Рекомендации по проектированию классов (AV1000)
+        url: /class-design-guidelines/
+      - title: Рекомендации по проектированию членов класса (AV1100)
+        url: /member-design-guidelines/
+      - title: Различные рекомендации по проектированию (AV1200)
+        url: /misc-design-guidelines/
+      - title: Рекомендации по улучшению сопровождаемости кода (AV1500)
+        url: /maintainability-guidelines/
+      - title: Рекомендации по именованию (AV1700)
+        url: /naming-guidelines/
+      - title: Рекомендации по повышению производительности (AV1800)
+        url: /performance-guidelines/
+      - title: Рекомендации по использованию фреймворка (AV2200)
+        url: /framework-guidelines/
+      - title: Рекомендации по созданию документации (AV2300)
+        url: /documentation-guidelines/
+      - title: Рекомендации по оформлению (AV2400)
+        url: /layout-guidelines/
+      - title: Ресурсы & Статьи
+        url: /resources/
+
+  - title: Поддержка сообщества
+    children:
+      - title: C# Guidelines Analyzer
+        url: https://github.com/bkoelman/CSharpGuidelinesAnalyzer
+      - title: Перевод на Русский язык (by Sergey Russkikh)
+        url: https://github.com/SergeyRusskih/CSharpGuidelines.Russian
