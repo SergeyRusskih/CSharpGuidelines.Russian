@@ -1,5 +1,5 @@
 ---
-title: Naming Guidelines
+title: Рекомендации по именованию
 permalink: /naming-guidelines/
 classes: wide
 search: true
