@@ -1,5 +1,5 @@
 ---
-title: Performance Guidelines
+title: Рекомендации по повышению производительности
 permalink: /performance-guidelines/
 classes: wide
 search: true
@@ -7,22 +7,22 @@ sidebar:
   nav: "sidebar"
 ---
 
-### <a name="av1800"></a> Consider using `Any()` to determine whether an `IEnumerable<T>` is empty (AV1800) ![](/assets/images/3.png)
-When a member or local function returns an `IEnumerable<T>` or other collection class that does not expose a `Count` property, use the `Any()` extension method rather than `Count()` to determine whether the collection contains items. If you do use `Count()`, you risk that iterating over the entire collection might have a significant impact (such as when it really is an `IQueryable<T>` to a persistent store).
+### <a name="av1800"></a> Используйте `Any()`, чтобы проверить `IEnbmerable` на пустоту (AV1800) ![](/assets/images/3.png)
+Если метод или другой элемент возвращает `IEnumerable` или другой класс коллекции, который не предоставляет свойство Count, используйте метод расширения `Any()` вместо `Count()`, чтобы проверить коллекцию на пустоту. Если вы используете `Count()`, то вы рискуете снизить производительность, т.к. это приведет к итерации всей коллекции (например, в случае с `IQueryable` выполнится запрос к данным).
 
-**Note:** If you return an `IEnumerable<T>` to prevent changes from calling code as explained in [AV1130](/member-design-guidelines#av1130), and you're developing in .NET 4.5 or higher, consider the new read-only classes.
+**Примечание:** Если вы возвращаете `IEnumerable`, чтобы предотвратить изменение возвращаемой коллекции, как было рекомендовано в правиле [AV1130](/member-design-guidelines#av1130), и вы работаете с .NET 4.5 и выше, попробуйте использовать новые read-only классы.
 
-### <a name="av1820"></a> Only use `async` for low-intensive long-running activities (AV1820) ![](/assets/images/1.png)
-The usage of `async` won't automagically run something on a worker thread like `Task.Run` does. It just adds the necessary logic to allow releasing the current thread, and marshal the result back on that same thread if a long-running asynchronous operation has completed. In other words, use `async` only for I/O bound operations.
+### <a name="av1820"></a> Используйте `async` только для долговременных и низкоинтенсивных задач (AV1820) ![](/assets/images/1.png)
+Использование `async` не запустит автоматически что-нибудь в рабочем потоке, как это делает `Task.Run`. `Async`, просто добавляет необходимую логику, которая служит для того, чтобы разрешить высвобождать текущий поток и вернуть результат на тот же поток после завершения асинхронной операции. Другими словами, используйте `async` только для операций, связанных с I/O.
 
-### <a name="av1825"></a> Prefer `Task.Run` for CPU-intensive activities (AV1825) ![](/assets/images/1.png)
-If you do need to execute a CPU bound operation, use `Task.Run` to offload the work to a thread from the Thread Pool. Remember that you have to marshal the result back to your main thread manually.
+### <a name="av1825"></a> Используйте `Task.Run` для высокоинтенсивных задач (AV1825) ![](/assets/images/1.png)
+Если вам нужно выполнить операцию, связанную с выделением дополнительных ресурсов процессора, используйте `Task.Run`, чтобы выгрузить работу на поток из пула потоков. Просто не забывайте о том, что вам придется вручную возвращать результат в ваш основной поток.
 
-### <a name="av1830"></a> Beware of mixing up `async`/`await` with `Task.Wait` (AV1830) ![](/assets/images/1.png)
-`await` does not block the current thread but simply instructs the compiler to generate a state-machine. However, `Task.Wait` blocks the thread and may even cause deadlocks (see [AV1835](#av1835)).
+### <a name="av1830"></a> Избегайте использования `await/async` с `Task.Wait` (AV1830) ![](/assets/images/1.png)
+`await` не заблокирует текущий поток, а просто проинформирует компилятор о необходимости построения машины состояний. Однако `Task.Wait` заблокирует поток и даже может привести к взаимным блокировкам (смотрите [AV1835](#av1835)).
 
-### <a name="av1835"></a> Beware of `async`/`await` deadlocks in single-threaded environments (AV1835) ![](/assets/images/1.png)
-Consider the following asynchronous method:
+### <a name="av1835"></a> Опасайтесь взаимной блокировки `async/await` в однопоточном окружении  (AV1835) ![](/assets/images/1.png)
+Рассмотрим следующий асинхронный метод:
 
 	private async Task GetDataAsync()
 	{
@@ -30,7 +30,7 @@ Consider the following asynchronous method:
 		return result.ToString();
 	}
 
-Now when an ASP.NET MVC controller action does this:
+Затем вызовете его в методе контроллера ASP.NET MVC следующим образом:
 
 	public ActionResult ActionAsync()
 	{
@@ -39,4 +39,4 @@ Now when an ASP.NET MVC controller action does this:
 		return View(data);  
 	}
 
-You end up with a deadlock. Why? Because the `Result` property getter will block until the `async` operation has completed, but since an `async` method _could_ automatically marshal the result back to the original thread (depending on the current `SynchronizationContext` or `TaskScheduler`) and ASP.NET uses a single-threaded synchronization context, they'll be waiting on each other. A similar problem can also happen on UWP, WPF or a Windows Store C#/XAML app. Read more about this [here](http://blogs.msdn.com/b/pfxteam/archive/2011/01/13/10115163.aspx).
+Здесь вы получите взаимную блокировку. Почему? Потому что геттер свойства `Result` будет блокировать поток до тех пор, пока операция `async` не будет завершена, но поскольку метод `async` будет автоматически возвращать результат на оригинальный поток, а ASP.NET использует однопоточный контекст синхронизации, они будут продолжать ждать друг друга. Похожая проблема также может возникнуть с WPF, Silverlight или с C#/XAML приложениями Windows Store. Вы можете узнать об этом больше [здесь](http://blogs.msdn.com/b/pfxteam/archive/2011/01/13/10115163.aspx).
