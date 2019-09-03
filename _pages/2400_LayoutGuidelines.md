@@ -9,17 +9,17 @@ sidebar:
 
 ### <a name="av2400"></a> Используйте общие правила оформления (AV2400) ![](/assets/images/1.png)
 
-- Keep the length of each line under 130 characters.
+- Держите длину строк в пределах 130 символов.
 
-- Use an indentation of 4 spaces, and don't use tabs
+- В качестве отступов используйте 4 пробела и не используйте табуляцию.
 
-- Keep one space between keywords like `if` and the expression, but don't add spaces after `(` and before `)` such as: `if (condition == null)`.
+- Вставляйте один пробел между выражениями (например `if`), а также ключевыми словами. Не используйте пробелы после `(` и перед `)`. Например: `if (condition == null)`.
 
-- Add a space around operators like `+`, `-`, `==`, etc.
+- Добавляйте пробел перед и после операторов (например `+`, `-`, `==`).
 
-- Always put opening and closing curly braces on a new line.
+- Всегда переносите открывающию и закрывающию скобку на новую строку.
 
-- Don't indent object/collection initializers and initialize each property on a new line, so use a format like this: 
+- Не устанавливайте значение каждого свойства объекта в новой строке после инициализации объекта. Используйте следующий формат: 
 
 		var dto = new ConsumerDto
 		{
@@ -32,73 +32,74 @@ sidebar:
 			}
 		};
 
-- Don't indent lambda statement blocks and use a format like this:
+- Не разделяйте объявление лямбда-выражения на несколько строк. Используйте формат, как показано ниже:
 
 		methodThatTakesAnAction.Do(x =>
 		{ 
 			// do something like this 
 		}
 
-- Keep expression-bodied-members on one line. Break long lines after the arrow sign, like this:
+- Держите логически связанные элементы выражения в одной строке. Разбивайте длинные выражения после знака стрелочки как показано ниже:
 
 		private string GetLongText =>
 			"ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC";
 
-- Put the entire LINQ statement on one line, or start each keyword at the same indentation, like this:
+- Объявляйте LINQ-запрос в одной строке или объявляйте каждое ключевое слово этого запроса в новой строке, как показано ниже:
 
 		var query = from product in products where product.Price > 10 select product;
 
-  	or
+  	или
 
 		var query =  
 		    from product in products  
 		    where product.Price > 10  
 		    select product;
 
-- Start the LINQ statement with all the `from` expressions and don't interweave them with restrictions.
-- Add parentheses around every binary expression, but don't add parentheses around unary expressions. For example `if (!string.IsNullOrEmpty(str) && (str != "new"))`
+- Начинайте LINQ-запрос с объявления всех выражений `from` и не перемешивайте их с условными выражениями.
 
-- Add an empty line between multi-line statements, between multi-line members, after the closing curly braces, between unrelated code blocks, around the `#region` keyword, and between the `using` statements of different root namespaces.
+- Добавляйте скобки вокруг каждого сравнения в условном выражении, но не добавляйте их вокруг одиночного выражения. Например: `if (!string.IsNullOrEmpty(str) && (str != “new”))`.
 
-### <a name="av2402"></a> Order and group namespaces according to the company (AV2402) ![](/assets/images/3.png)
+- Добавляйте пустую строку между многострочными выражениями, членами класса, после закрытия парных скобок, после несвязанных друг с другом блоков кода, перед и после ключевого слова `#region` и между директивами `using`, если пространства имен относятся к различным компаниям.
 
-	// Microsoft namespaces are first
+### <a name="av2402"></a> Располагайте и группируйте пространства имен в соответствии с названием компании (AV2402) ![](/assets/images/3.png)
+
+	// Пространства имен Microsoft первые
 	using System;
 	using System.Collections.Generic;
 	using System.XML;
 	
-	// Then any other namespaces in alphabetic order
+	// Другие пространства имен идут в алфавитном порядке
 	using AvivaSolutions.Business;
 	using AvivaSolutions.Standard;
 	using Telerik.WebControls;
 	using Telerik.Ajax;
 
-Using static directives and using alias directives should be written below regular using directives.
-Always place these directives at the top of the file, before any namespace declarations (not inside them).
+Статические директивы и алиасы должны использоваться после объявления используемых пространств имен.
+Используйте их перед объявлением пространства имен (не внутри).
 
-### <a name="av2406"></a> Place members in a well-defined order (AV2406) ![](/assets/images/1.png)
-Maintaining a common order allows other team members to find their way in your code more easily. In general, a source file should be readable from top to bottom, as if reading a book, to prevent readers from having to browse up and down through the code file.
+### <a name="av2406"></a> Располагайте члены класса в строго определенном порядке (AV2406) ![](/assets/images/1.png)
+Сохранение общего порядка позволяет другим членам команды легче ориентироваться в вашем коде. В общем случае, чтение файла с исходным кодом должно идти сверху вниз, как если бы вы читали книгу. Это предотвращает ситуацию, когда приходится просматривать файл вверх и вниз в поисках нужного фрагмента.
 
-1. Private fields and constants (in a region)
-2. Public constants
-3. Public static read-only fields
-4. Factory methods
-5. Constructors and the finalizer
-6. Events 
-7. Public properties
-8. Other methods and private properties in calling order
+1. Приватные поля и константы (в `#region`)
+2. Публичные константы
+3. Публичные `read-only` статические поля
+4. Фабричные методы
+5. Конструкторы и финализаторы
+6. События
+7. Публичные свойства
+8. Прочие методы и приватные свойства в порядке их вызова
 
-Declare local functions at the bottom of their containing method bodies (after all executable code).
+Объявляйте локальные функции внизу метода, который их содержит (после всего выполняемого кода).
 
-### <a name="av2407"></a> Be reluctant with `#region` (AV2407) ![](/assets/images/1.png)
-Regions can be helpful, but can also hide the main purpose of a class. Therefore, use `#region` only for:
+### <a name="av2407"></a> Будьте осторожны с использованием ключевого слова `#region` (AV2407) ![](/assets/images/1.png)
+Ключевое слово `#region` может быть полезно, но оно также может скрывать основное предназначение класса. Следовательно, используйте `#region` только для:
 
-- Private fields and constants (preferably in a `Private Definitions` region).
-- Nested classes
-- Interface implementations (only if the interface is not the main purpose of that class)
+- Приватных полей и констант (предпочтительно в `Private Definitions` region)
+- Вложенных классов
+- Реализаций интерфейса (только если реализация интерфейса не является основной целью этого класса)
 
-### <a name="av2410"></a> Use expression-bodied members appropriately (AV2410) ![](/assets/images/1.png)
-Favor expression-bodied member syntax over regular member syntax only when:
+### <a name="av2410"></a> С остарожностью используйте выражения в качестве членов класса (AV2410) ![](/assets/images/1.png)
+Используйте выражаения вместо обычного синтаксиса в качестве значений членов класса только тогда, когда:
 
-- the body consists of a single statement and
-- the body fits on a single line.
+- тело выражения состоит из одного условия (факта).
+- тело выражения мещается в одну строку.
