@@ -1,5 +1,5 @@
 ---
-title: Documentation Guidelines
+title: Рекомендации по созданию документации
 permalink: /documentation-guidelines/
 classes: wide
 search: true
@@ -7,22 +7,22 @@ sidebar:
   nav: "sidebar"
 ---
 
-### <a name="av2301"></a> Write comments and documentation in US English (AV2301) ![](/assets/images/1.png)
+### <a name="av2301"></a> Пишите комментарии и документацию на американском английском (AV2301) ![](/assets/images/1.png)
 
-### <a name="av2305"></a> Document all `public`, `protected` and `internal` types and members (AV2305) ![](/assets/images/2.png)
-Documenting your code allows Visual Studio, [Visual Studio Code](https://code.visualstudio.com/) or [Jetbrains Rider](https://www.jetbrains.com/rider/) to pop-up the documentation when your class is used somewhere else. Furthermore, by properly documenting your classes, tools can generate professionally looking class documentation.
+### <a name="av2305"></a> Документируйте все `public`, `protected` и `internal` типы и члены (AV2305) ![](/assets/images/2.png)
+Документирование вашего кода позволит Visual Studio, [Visual Studio Code](https://code.visualstudio.com/) и [Jetbrains Rider](https://www.jetbrains.com/rider/) выводить подсказки, когда ваш класс будет использоваться где-нибудь еще. Кроме этого, когда вы хорошо документируете ваши классы, вы можете генерировать документацию к вашему коду, которая выглядит профессионально.
 
-### <a name="av2306"></a> Write XML documentation with other developers in mind (AV2306) ![](/assets/images/2.png)
-Write the documentation of your type with other developers in mind. Assume they will not have access to the source code and try to explain how to get the most out of the functionality of your type.
+### <a name="av2306"></a> При написании XML документации помните о другом разработчике (AV2306) ![](/assets/images/2.png)
+При написании документации XML помните о другом разработчике. Может быть, у него/нее не будет доступа к исходному коду и нужно попытаться более полно объяснить, как можно использовать ваш тип.
 
-### <a name="av2307"></a> Write MSDN-style documentation (AV2307) ![](/assets/images/3.png)
-Following the MSDN online help style and word choice helps developers find their way through your documentation more easily.
+### <a name="av2307"></a> Используйте MSDN стиль написания документации (AV2307) ![](/assets/images/3.png)
+Следуйте стилю онлайн справки MSDN, чтобы помочь другому разработчику быстрее разобраться в вашей документации.
 
-### <a name="av2310"></a> Avoid inline comments (AV2310) ![](/assets/images/2.png)
-If you feel the need to explain a block of code using a comment, consider replacing that block with a method with a clear name.
+### <a name="av2310"></a> Избегайте инлайновых комментариев (AV2310) ![](/assets/images/2.png)
+Если вы испытываете необходимость в том, чтобы пояснить тот или иной участок кода с помощью комментария, то, скорей всего, необходимо вынести этот код в отдельный метод и дать ему наименование, которое будет ясно говорить о его предназначении. 
 
-### <a name="av2316"></a> Only write comments to explain complex algorithms or decisions (AV2316) ![](/assets/images/1.png)
-Try to focus comments on the *why* and *what* of a code block and not the *how*. Avoid explaining the statements in words, but instead help the reader understand why you chose a certain solution or algorithm and what you are trying to achieve. If applicable, also mention that you chose an alternative solution because you ran into a problem with the obvious solution.
+### <a name="av2316"></a> Пишите комментарии только для того, чтобы объяснить сложные решения и алгоритмы (AV2316) ![](/assets/images/1.png)
+Старайтесь, чтобы ваши комментарии отвечали на вопросы *почему* и *что*, а не *как*. Избегайте разъяснения блока кода словами, вместо этого помогите понять тому, кто будет читать ваш код, почему вы выбрали это решение или алгоритм и чего вы пытаетесь этим достичь. В случае выбора альтернативного решения, если возможно, также объясните, почему простое решение привело к проблемам.
 
-### <a name="av2318"></a> Don't use comments for tracking work to be done later (AV2318) ![](/assets/images/3.png)
-Annotating a block of code or some work to be done using a *TODO* or similar comment may seem a reasonable way of tracking work-to-be-done. But in reality, nobody really searches for comments like that. Use a work item tracking system to keep track of leftovers.
+### <a name="av2318"></a> Не используйте комментарии для отслеживания работы, которая должна быть сделана позднее (AV2318) ![](/assets/images/3.png)
+Добавление к блоку кода комментария *TODO* или какого-либо другого для отслеживания работы, которая должна быть сделана, может показаться хорошим решением. Но на самом деле такие комментарии никому не нужны. Используйте систему трекинга задач чтобы отслеживать недоработки.

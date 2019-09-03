@@ -1,5 +1,5 @@
 ---
-title: Layout Guidelines
+title: Рекомендации по оформлению
 permalink: /layout-guidelines/
 classes: wide
 search: true
@@ -7,7 +7,7 @@ sidebar:
   nav: "sidebar"
 ---
 
-### <a name="av2400"></a> Use a common layout (AV2400) ![](/assets/images/1.png)
+### <a name="av2400"></a> Используйте общие правила оформления (AV2400) ![](/assets/images/1.png)
 
 - Keep the length of each line under 130 characters.
 
