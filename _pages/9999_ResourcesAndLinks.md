@@ -1,27 +1,27 @@
 ---
-title: Links & Articles
+title: Ссылки и статьи
 permalink: /resources/
 classes: wide
 sidebar:
   nav: "sidebar"
 ---
 
-In addition to the many links provided throughout this document, I'd like to recommend the following books, articles and sites for everyone interested in software quality:
+В дополнение к ссылкам в документе, я бы хотел рекомендовать следующие книги, статьи и сайты для каждого кто интересуется качеством кода:
 
 * [Code Complete: A Practical Handbook of Software Construction](http://www.amazon.com/Code-Complete-Practical-Handbook-Construction/dp/0735619670) (Steve McConnel)  
-One of the best books I've ever read. It deals with all aspects of software development, and even though the book was originally written in 2004 you'll be surprised when you see how accurate it still is. I wrote a [review](http://www.continuousimprover.com/2009/07/book-review-code-complete-2nd-edition.html) in 2009 if you want to get a sense of its contents.
+Это одна из лучших книг, которые я когда-либо читал. Она в деталях повествует обо всех аспектах разработки программного обеспечения. Даже несмотря на то, что оригинал этой книги был написан в 2004, вы будете удивлены, когда увидите, насколько актуальны вещи, описанные в ней. Если вы хотите знать серьезность написанных выше слов, я написал [ревью](http://www.continuousimprover.com/2009/07/book-review-code-complete-2nd-edition.html) на эту книгу в 2009.
 
 * [The Art of Agile Development](http://www.amazon.com/Art-Agile-Development-James-Shore/dp/0596527675) (James Shore)  
-Another great all-encompassing trip through the many practices preached by processes like Scrum and Extreme Programming. If you're looking for a quick introduction with a pragmatic touch, make sure you read James's book.
+ Еще одно замечательное всеохватывающее путешествие через многие практики, проповедуемые такими методологиями, как Scrum и экстремальное программирование. Если вы хотите быстро ознакомиться с этими методологиями, обязательно прочитайте книгу Джеймса. 
 
 * [Applying Domain-Driven Design and Patterns: With Examples in C# and .NET](http://www.amazon.com/Applying-Domain-Driven-Design-Patterns-Examples/dp/0321268202) (Jimmy Nilsson)  
-The book that started my interest for both Domain-Driven Design and Test-Driven Development. It's one of those books that I wished I had read a few years earlier. It would have spared me from many mistakes.
+Книга, с которой начался мой интерес к предметно-ориентированному проектированию (DDD) и разработке через тестирование (TDD). Это одна из тех книг, которую бы мне следовало прочитать на несколько лет раньше, чтобы избежать многих своих ошибок.
 
 * [Jeremy D. Miller's Blog](http://codebetter.com/jeremymiller/author/jeremymiller/)  
-Although he is not that active anymore, in the last couple of years he has written some excellent blog posts on Test-Driven Development, Design Patterns and design principles. I've learned a lot from his real-life and practical insights.
+Несмотря на то, что он больше не ведет этот блог, в последние пару лет им были написаны превосходные статьи о разработке через тестирование, паттернах и принципах проектирования. Я многому научился на его идеях и примерах, взятых из реальной жизни.
 
 * [LINQ Framework Design Guidelines](https://blogs.msdn.microsoft.com/mirceat/2008/03/12/linq-framework-design-guidelines/)  
-A set of rules and recommendations that you should adhere to when creating your own implementations of `IQueryable`.
+Набор правил и рекомендаций, которых вам следует придерживаться при создании своей собственной реализации интерфейса `IQueryable`. 
 
 * [Best Practices for c# async/await](https://msdn.microsoft.com/en-us/magazine/jj991977.aspx)  
-Older (but still valid) overview of crucial practices to follow when adopting `async` and `await` in your own code base.
+Достаточно старая статья, но методы и практики применения `async` и `await`, которые в ней описаны, применимы по сей день.
